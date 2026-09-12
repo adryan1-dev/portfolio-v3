@@ -1,5 +1,6 @@
 ---
 // Círculo branco que segue o mouse e inverte as cores do que está embaixo (mix-blend-mode: difference).
+// Sobre [data-cursor-attach] ele gruda: vira uma pílula em volta do elemento e o puxa de leve.
 // Só aparece com mouse; toque e caneta mantêm o comportamento nativo.
 interface Props {
   /** Diâmetro do círculo em px */
@@ -17,57 +18,151 @@ const { size = 60 } = Astro.props;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const root = document.documentElement;
 
+  const ATTACH = '[data-cursor-attach]';
+  const PAD = 6; // folga da pílula em volta do elemento
+  const PULL = 0.18; // quanto o elemento acompanha o mouse
+  const CURSOR_PULL = 0.1; // quanto a pílula acompanha o mouse
+
+  type Offset = { x: number; y: number; tx: number; ty: number };
+
   if (cursor) {
-    const target = { x: 0, y: 0 };
-    const current = { x: 0, y: 0 };
+    const base = parseFloat(getComputedStyle(cursor).getPropertyValue('--cursor-size')) || 60;
+    const pointer = { x: 0, y: 0 };
+    const current = { x: 0, y: 0, w: base, h: base, r: base / 2 };
+    const offsets = new Map<HTMLElement, Offset>();
+    let attached: HTMLElement | null = null;
     let frame = 0;
     let placed = false;
 
-    const render = () => {
-      cursor.style.transform = `translate3d(${current.x}px, ${current.y}px, 0)`;
+    const radiusFor = (el: HTMLElement, height: number) => {
+      const radius = parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0;
+      // Links de texto (sem raio) viram pílula; botões mantêm a curva própria somada à folga
+      return radius > 0 ? Math.min(radius + PAD, height / 2) : height / 2;
     };
 
-    // Aproxima 20% por quadro e para o loop quando o círculo alcança o mouse
+    const offsetOf = (el: HTMLElement) => {
+      let offset = offsets.get(el);
+      if (!offset) {
+        offset = { x: 0, y: 0, tx: 0, ty: 0 };
+        offsets.set(el, offset);
+      }
+      return offset;
+    };
+
+    const setAttached = (el: HTMLElement | null) => {
+      if (el === attached) return;
+      if (attached) {
+        const previous = offsetOf(attached);
+        previous.tx = 0;
+        previous.ty = 0;
+      }
+      attached = el;
+    };
+
+    const render = () => {
+      cursor.style.width = `${current.w}px`;
+      cursor.style.height = `${current.h}px`;
+      cursor.style.borderRadius = `${current.r}px`;
+      cursor.style.transform = `translate3d(${current.x - current.w / 2}px, ${current.y - current.h / 2}px, 0)`;
+    };
+
     const tick = () => {
-      const ease = reducedMotion.matches ? 1 : 0.2;
+      const reduced = reducedMotion.matches;
+      const ease = reduced ? 1 : 0.2;
+      let target = { x: pointer.x, y: pointer.y, w: base, h: base, r: base / 2 };
+
+      if (attached && !attached.isConnected) setAttached(null);
+
+      if (attached) {
+        const offset = offsetOf(attached);
+        const rect = attached.getBoundingClientRect();
+        // Centro sem o deslocamento que nós mesmos aplicamos, para não realimentar o movimento
+        const cx = rect.left + rect.width / 2 - offset.x;
+        const cy = rect.top + rect.height / 2 - offset.y;
+        const dx = pointer.x - cx;
+        const dy = pointer.y - cy;
+        const h = rect.height + PAD * 2;
+        target = {
+          x: cx + dx * CURSOR_PULL + offset.x,
+          y: cy + dy * CURSOR_PULL + offset.y,
+          w: rect.width + PAD * 2,
+          h,
+          r: radiusFor(attached, h),
+        };
+        offset.tx = reduced ? 0 : dx * PULL;
+        offset.ty = reduced ? 0 : dy * PULL;
+      }
+
       current.x += (target.x - current.x) * ease;
       current.y += (target.y - current.y) * ease;
+      current.w += (target.w - current.w) * ease;
+      current.h += (target.h - current.h) * ease;
+      current.r += (target.r - current.r) * ease;
 
-      if (Math.abs(target.x - current.x) + Math.abs(target.y - current.y) < 0.1) {
-        current.x = target.x;
-        current.y = target.y;
-        frame = 0;
-      } else {
-        frame = requestAnimationFrame(tick);
+      let moving =
+        Math.abs(target.x - current.x) +
+          Math.abs(target.y - current.y) +
+          Math.abs(target.w - current.w) +
+          Math.abs(target.h - current.h) >
+        0.1;
+
+      for (const [el, offset] of offsets) {
+        offset.x += (offset.tx - offset.x) * ease;
+        offset.y += (offset.ty - offset.y) * ease;
+        if (el !== attached && Math.abs(offset.x) + Math.abs(offset.y) < 0.1) {
+          el.style.translate = '';
+          offsets.delete(el);
+          continue;
+        }
+        el.style.translate = `${offset.x}px ${offset.y}px`;
+        moving = true;
       }
+
       render();
+      // Grudado, o loop continua: o elemento pode se mover sozinho (scroll, header virando cápsula)
+      frame = moving || attached ? requestAnimationFrame(tick) : 0;
+    };
+
+    const wake = () => {
+      if (!frame) frame = requestAnimationFrame(tick);
     };
 
     const hide = () => {
       cursor.dataset.visible = 'false';
+      setAttached(null);
+      wake();
     };
 
     const onPointerMove = (event: PointerEvent) => {
       if (event.pointerType !== 'mouse' || !finePointer.matches) return;
 
-      const half = cursor.offsetWidth / 2;
-      target.x = event.clientX - half;
-      target.y = event.clientY - half;
+      pointer.x = event.clientX;
+      pointer.y = event.clientY;
 
       // Primeira aparição já na posição do mouse, sem atravessar a tela vindo do canto
       if (!placed) {
         placed = true;
-        current.x = target.x;
-        current.y = target.y;
+        current.x = pointer.x;
+        current.y = pointer.y;
         render();
         root.classList.add('has-inverted-cursor');
       }
 
+      setAttached((event.target as Element | null)?.closest<HTMLElement>(ATTACH) ?? null);
       cursor.dataset.visible = 'true';
-      if (!frame) frame = requestAnimationFrame(tick);
+      wake();
+    };
+
+    // Rolando sem mexer o mouse, o elemento embaixo do ponteiro muda
+    const onScroll = () => {
+      if (!placed || cursor.dataset.visible !== 'true') return;
+      const under = document.elementFromPoint(pointer.x, pointer.y);
+      setAttached(under?.closest<HTMLElement>(ATTACH) ?? null);
+      wake();
     };
 
     document.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
     root.addEventListener('mouseleave', hide);
     root.addEventListener('mouseenter', () => {
       if (placed && finePointer.matches) cursor.dataset.visible = 'true';
@@ -95,14 +190,15 @@ const { size = 60 } = Astro.props;
     mix-blend-mode: difference;
     pointer-events: none;
     opacity: 0;
-    will-change: transform;
+    will-change: transform, width, height;
     transition: opacity 300ms var(--ease-out);
   }
   .inverted-cursor[data-visible='true'] { opacity: 1; }
 
-  /* Esconde a seta do sistema só em texto e fundo: links, botões e o carrossel mantêm o cursor próprio.
-     Com um <dialog> aberto o círculo fica abaixo da camada do modal, então a seta volta. */
-  :global(html.has-inverted-cursor:not(:has(dialog[open])) body) { cursor: none; }
+  /* O círculo é o cursor: nenhuma seta, mãozinha ou grab nativo aparece junto.
+     !important porque componentes definem cursor próprio (botões, FAQ, carrossel).
+     Com um <dialog> aberto o círculo fica abaixo da camada do modal, então o cursor nativo volta. */
+  :global(html.has-inverted-cursor:not(:has(dialog[open])) :is(body, body *)) { cursor: none !important; }
   :global(html:has(dialog[open])) .inverted-cursor { display: none; }
 
   @media (hover: none), (pointer: coarse) {

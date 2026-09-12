@@ -8,24 +8,25 @@ import { contact, nav, site, whatsappLink } from '../../data/site';
 
 <header class="site-header" data-header>
   <div class="site-header__inner">
-    <a href="/" class="wordmark">{site.name}</a>
+    <a href="/" class="wordmark" data-cursor-attach>{site.name}</a>
 
     <nav class="site-nav" aria-label="Principal">
       <ul>
         {nav.map((item) => (
-          <li><a href={item.href} class="site-nav__link">{item.label}</a></li>
+          <li><a href={item.href} class="site-nav__link" data-cursor-attach>{item.label}</a></li>
         ))}
       </ul>
     </nav>
 
     <div class="site-header__actions">
-      <a href={site.cv} download class="site-header__cv"><span class="link">Baixar CV</span></a>
+      <a href={site.cv} download class="site-header__cv" data-cursor-attach><span class="link">Baixar CV</span></a>
       <Button href={whatsappLink()} external size="sm">Vamos conversar</Button>
     </div>
 
     <button
       type="button"
       class="menu-toggle"
+      data-cursor-attach
       data-menu-open
       aria-haspopup="dialog"
       aria-expanded="false"

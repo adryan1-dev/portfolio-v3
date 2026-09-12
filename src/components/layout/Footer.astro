@@ -13,7 +13,7 @@ const year = new Date().getFullYear();
 <footer class="site-footer">
   <div class="container site-footer__inner">
     <div>
-      <a href="/" class="site-footer__wordmark">{site.name}</a>
+      <a href="/" class="site-footer__wordmark" data-cursor-attach>{site.name}</a>
       <p class="site-footer__role">{site.role}</p>
     </div>
 
@@ -21,6 +21,7 @@ const year = new Date().getFullYear();
       {links.map((link) => (
         <li>
           <a
+            data-cursor-attach
             href={link.href}
             target={link.external ? '_blank' : undefined}
             rel={link.external ? 'noopener noreferrer' : undefined}

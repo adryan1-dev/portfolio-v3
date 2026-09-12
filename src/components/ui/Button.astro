@@ -18,6 +18,7 @@ const { href, variant = 'primary', size = 'md', external = false, download, clas
   target={external ? '_blank' : undefined}
   rel={external ? 'noopener noreferrer' : undefined}
   download={download}
+  data-cursor-attach
 >
   <span><slot /></span>
   {external && <span class="btn__icon btn__icon--external" aria-hidden="true">↗</span>}
