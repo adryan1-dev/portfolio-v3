@@ -42,7 +42,7 @@ const headlineLines = ['Sites à altura', 'da empresa que', 'você construiu.'].
       </div>
     </div>
 
-    <figure class="hero__portrait crop anim-fade" style="--d:160ms">
+    <figure class="hero__portrait crop">
       <div class="hero__portrait-frame">
         <Picture
           src={portrait}
@@ -155,6 +155,19 @@ const headlineLines = ['Sites à altura', 'da empresa que', 'você construiu.'].
     height: 100%;
     object-fit: cover;
     object-position: 50% 28%;
+  }
+
+  /* Foto abre de baixo para cima com zoom assentando; as marcas de corte chegam por último */
+  .hero__portrait-frame { animation: frame-open 1100ms var(--ease-in-out) 140ms both; }
+  .hero__portrait-frame :global(img) { animation: frame-zoom 1600ms var(--ease-out) 140ms both; }
+  .hero__portrait::before { animation: fade-in 700ms var(--ease-out) 1000ms both; }
+
+  @keyframes frame-open {
+    from { clip-path: inset(100% 0 0 0 round 6px); }
+    to { clip-path: inset(0 round 6px); }
+  }
+  @keyframes frame-zoom {
+    from { transform: scale(1.18); }
   }
 
   .hero__spec {

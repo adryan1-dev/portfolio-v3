@@ -1,5 +1,6 @@
 ---
 import type { SimpleIcon } from 'simple-icons';
+import RiseText from '../ui/RiseText.astro';
 import {
   siApacheairflow,
   siCss,
@@ -70,19 +71,19 @@ const toolGroups = tools.map((group) => ({
 
 <section id="sobre" class="section" aria-labelledby="sobre-title">
   <div class="container about">
-    <h2 id="sobre-title" class="about__title">Design, código e visão de negócio.</h2>
+    <h2 id="sobre-title" class="about__title" data-reveal-group><RiseText text="Design, código e visão de negócio." /></h2>
 
-    <div class="about__text">
-      <p>
+    <div class="about__text" data-reveal-group>
+      <p data-reveal>
         Sou designer gráfico e desenvolvedor full stack. Na Propague Marketing crio materiais para marcas
         diferentes, com prazos e objetivos reais. No código, construo sites e aplicações do layout ao deploy.
       </p>
-      <p>
+      <p data-reveal style="--i:1">
         Essa combinação evita dois problemas comuns: o site bonito que não traz contato e o sistema que funciona,
         mas ninguém entende. Cada projeto começa pelo objetivo do negócio e termina publicado, rápido e fácil de
         usar no celular.
       </p>
-      <p>
+      <p data-reveal style="--i:2">
         Curso Análise e Desenvolvimento de Sistemas e trabalho com React, Node.js, PostgreSQL e Python em projetos
         próprios e de clientes.
       </p>
@@ -90,9 +91,9 @@ const toolGroups = tools.map((group) => ({
 
     <div class="about__block about__block--experience">
       <h3 class="about__label mono">Experiência e formação</h3>
-      <ol class="rows" role="list">
-        {experience.map((item) => (
-          <li class="row">
+      <ol class="rows" role="list" data-reveal-group>
+        {experience.map((item, i) => (
+          <li class="row" data-reveal data-reveal-rule style={`--i:${i}`}>
             <span class="row__key mono">{item.period}</span>
             <div>
               <p class="row__role">{item.role}</p>
@@ -101,7 +102,7 @@ const toolGroups = tools.map((group) => ({
           </li>
         ))}
       </ol>
-      <a class="about__cv" href={site.cv} download="adryan-chaves-cv.pdf">
+      <a class="about__cv" href={site.cv} download="adryan-chaves-cv.pdf" data-reveal-group data-reveal>
         <span class="link">Baixar currículo completo (PDF)</span><span aria-hidden="true">↓</span>
       </a>
     </div>
@@ -110,11 +111,11 @@ const toolGroups = tools.map((group) => ({
       <h3 class="about__label mono">Ferramentas</h3>
       <div class="tools">
         {toolGroups.map((group) => (
-          <div class="tools__group">
-            <p class="tools__label mono">{group.label}</p>
+          <div class="tools__group" data-reveal-group>
+            <p class="tools__label mono" data-reveal>{group.label}</p>
             <ul class="tools__grid" role="list">
-              {group.items.map((item) => (
-                <li class="tech" style={`--brand: ${item.color}`}>
+              {group.items.map((item, j) => (
+                <li class="tech" data-reveal style={`--brand: ${item.color}; --i: ${(j + 1) * 0.5}`}>
                   <svg class="tech__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                     <path d={item.path} />
                   </svg>
@@ -125,7 +126,7 @@ const toolGroups = tools.map((group) => ({
           </div>
         ))}
       </div>
-      <p class="tools__languages">
+      <p class="tools__languages" data-reveal-group data-reveal data-reveal-rule>
         <span class="tools__label mono">Idiomas</span>
         {languages.join(', ')}
       </p>

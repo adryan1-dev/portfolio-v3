@@ -98,10 +98,15 @@ import { contact, nav, site, whatsappLink } from '../../data/site';
     pointer-events: none;
   }
 
+  @keyframes header-in {
+    from { opacity: 0; transform: translateY(-12px); }
+  }
+
   .site-header {
     position: fixed;
     inset: 0 0 auto;
     z-index: 40;
+    animation: header-in 700ms var(--ease-out) both;
     border-bottom: 1px solid transparent;
     transition:
       background-color var(--dur-base) var(--ease-out),

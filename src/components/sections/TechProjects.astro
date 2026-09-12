@@ -15,8 +15,8 @@ import { contact } from '../../data/site';
   <div class="container">
     <ul class="lab" role="list">
       {techProjects.map((project) => (
-        <li>
-          <a class="lab__row" href={project.repo} target="_blank" rel="noopener noreferrer">
+        <li data-reveal-group data-reveal>
+          <a class="lab__row" data-reveal-rule href={project.repo} target="_blank" rel="noopener noreferrer">
             <div class="lab__head">
               <h3 class="lab__name"><span class="link">{project.name}</span></h3>
               <span class="lab__year mono">{project.year}</span>
@@ -27,8 +27,8 @@ import { contact } from '../../data/site';
           </a>
         </li>
       ))}
-      <li>
-        <a class="lab__all" href={contact.github} target="_blank" rel="noopener noreferrer">
+      <li data-reveal-group data-reveal>
+        <a class="lab__all" data-reveal-rule href={contact.github} target="_blank" rel="noopener noreferrer">
           <span class="link">Ver todos os repositórios no GitHub</span><span class="lab__arrow" aria-hidden="true">↗</span>
         </a>
       </li>

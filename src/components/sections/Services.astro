@@ -14,9 +14,9 @@ import { whatsappLink } from '../../data/site';
   <div class="container">
     <ul class="services" role="list">
       {services.map((service) => (
-        <li class="service">
+        <li class="service" data-reveal-group data-reveal-rule>
           {/* Quem: nome do serviço e para quem ele é */}
-          <div class="service__who">
+          <div class="service__who" data-reveal>
             <h3 class="service__title">{service.title}</h3>
             <p class="service__audience">
               <span class="service__label mono">Para quem é</span>
@@ -25,7 +25,7 @@ import { whatsappLink } from '../../data/site';
           </div>
 
           {/* O quê: descrição e o que inclui */}
-          <div class="service__what">
+          <div class="service__what" data-reveal style="--i:1">
             <p class="service__text">{service.description}</p>
             <ul class="service__includes" role="list" aria-label={`O que inclui: ${service.title}`}>
               {service.includes.map((item) => <li class="mono">{item}</li>)}
@@ -34,6 +34,8 @@ import { whatsappLink } from '../../data/site';
 
           <a
             class="service__cta"
+            data-reveal
+            style="--i:2"
             href={whatsappLink(service.message)}
             target="_blank"
             rel="noopener noreferrer"
@@ -45,7 +47,7 @@ import { whatsappLink } from '../../data/site';
       ))}
     </ul>
 
-    <p class="services__note">
+    <p class="services__note" data-reveal-group data-reveal>
       <span class="services__note-label mono">Incluso</span>
       <span>
         Sites institucionais, landing pages e redesigns incluem domínio, hospedagem e 3 meses de manutenção para

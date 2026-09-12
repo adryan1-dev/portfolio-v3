@@ -13,7 +13,7 @@ import { steps } from '../../data/content';
   <div class="container">
     <ol class="steps" role="list">
       {steps.map((step, i) => (
-        <li class="step">
+        <li class="step" data-reveal-group data-reveal data-reveal-rule style={`--i:${i}`}>
           <span class="step__number mono">{String(i + 1).padStart(2, '0')}</span>
           <h3 class="step__title">{step.title}</h3>
           <p class="step__text">{step.text}</p>

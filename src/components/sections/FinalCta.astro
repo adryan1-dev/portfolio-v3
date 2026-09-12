@@ -1,28 +1,29 @@
 ---
 import Button from '../ui/Button.astro';
+import RiseText from '../ui/RiseText.astro';
 import Status from '../ui/Status.astro';
 import { contact, site, whatsappLink } from '../../data/site';
 ---
 
 <section id="contato" class="section" aria-labelledby="contato-title">
   <div class="container">
-    <div class="cta crop">
-      <p class="cta__eyebrow">Tem um projeto em mente?</p>
+    <div class="cta crop" data-reveal-group>
+      <p class="cta__eyebrow" data-reveal>Tem um projeto em mente?</p>
       <h2 id="contato-title" class="cta__title">
-        <span class="cta__line">Sua empresa pode ser</span>
-        <span class="cta__line">o próximo projeto.</span>
+        <span class="cta__line"><RiseText text="Sua empresa pode ser" start={2} /></span>
+        <span class="cta__line"><RiseText text="o próximo projeto." start={6} /></span>
       </h2>
-      <p class="cta__text">
+      <p class="cta__text" data-reveal style="--i:6">
         Se você precisa criar um site do zero ou melhorar o que já tem, conte o que precisa. Respondo com os
         próximos passos.
       </p>
 
-      <div class="cta__actions">
+      <div class="cta__actions" data-reveal style="--i:7">
         <Button href={whatsappLink()} external>Conversar no WhatsApp</Button>
         <Button href={`mailto:${contact.email}`} variant="ghost">Enviar e-mail</Button>
       </div>
 
-      <div class="cta__footer">
+      <div class="cta__footer" data-reveal data-reveal-rule style="--i:8">
         <Status />
         <p>
           Recrutando?{' '}<a href={site.cv} download="adryan-chaves-cv.pdf">Baixe meu currículo</a> ou fale
@@ -91,6 +92,12 @@ import { contact, site, whatsappLink } from '../../data/site';
     transition: text-decoration-color var(--dur-fast);
   }
   .cta__footer a:hover { text-decoration-color: currentColor; }
+
+  /* Marcas de corte chegam depois do título */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.js) .cta:not(.is-in)::before { opacity: 0; }
+    .cta.is-in::before { animation: fade-in 900ms var(--ease-out) 700ms both; }
+  }
 
   @media (min-width: 768px) {
     .cta__actions { display: flex; flex-wrap: wrap; }

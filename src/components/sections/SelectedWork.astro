@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import ProjectCard from '../work/ProjectCard.astro';
+import RiseText from '../ui/RiseText.astro';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 const total = String(projects.length).padStart(2, '0');
@@ -10,13 +11,13 @@ const total = String(projects.length).padStart(2, '0');
   <!-- No modo fixado, o JS dá a esta área a altura do percurso horizontal -->
   <div class="work__pin" data-carousel-pin>
     <div class="work__sticky">
-      <div class="container work__head">
+      <div class="container work__head" data-reveal-group>
         <div>
-          <h2 id="work-title" class="work__title">Projetos selecionados</h2>
-          <p class="work__intro">Sites para empresas e produtos que desenhei e desenvolvi, do layout ao deploy.</p>
+          <h2 id="work-title" class="work__title"><RiseText text="Projetos selecionados" /></h2>
+          <p class="work__intro" data-reveal style="--i:2">Sites para empresas e produtos que desenhei e desenvolvi, do layout ao deploy.</p>
         </div>
 
-        <div class="work__buttons">
+        <div class="work__buttons" data-reveal style="--i:3">
           <button type="button" class="work__button" data-carousel-prev aria-label="Projeto anterior" disabled>
             <span aria-hidden="true">←</span>
           </button>
@@ -29,12 +30,13 @@ const total = String(projects.length).padStart(2, '0');
       <ul
         class="work__track"
         data-carousel-track
+        data-reveal-group
         role="list"
         aria-roledescription="carrossel"
         aria-label="Projetos selecionados"
       >
         {projects.map((project, i) => (
-          <li class="work__slide" aria-roledescription="slide" aria-label={`${i + 1} de ${projects.length}`}>
+          <li class="work__slide" data-reveal style={`--i:${i}`} aria-roledescription="slide" aria-label={`${i + 1} de ${projects.length}`}>
             <ProjectCard project={project} index={i} />
           </li>
         ))}

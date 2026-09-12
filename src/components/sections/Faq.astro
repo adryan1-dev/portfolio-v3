@@ -1,20 +1,21 @@
 ---
+import RiseText from '../ui/RiseText.astro';
 import { faqs } from '../../data/content';
 import { whatsappLink } from '../../data/site';
 ---
 
 <section id="perguntas" class="section" aria-labelledby="faq-title">
   <div class="container faq">
-    <div class="faq__head">
-      <h2 id="faq-title" class="faq__title">Perguntas frequentes</h2>
-      <p class="faq__note">
+    <div class="faq__head" data-reveal-group>
+      <h2 id="faq-title" class="faq__title"><RiseText text="Perguntas frequentes" /></h2>
+      <p class="faq__note" data-reveal style="--i:2">
         Não encontrou sua dúvida?{' '}<a href={whatsappLink('Olá, Adryan! Tenho uma dúvida sobre como funciona um projeto de site.')} target="_blank" rel="noopener noreferrer">Pergunte pelo WhatsApp</a>.
       </p>
     </div>
 
-    <div class="faq__list">
-      {faqs.map((item) => (
-        <details class="faq__item" name="faq">
+    <div class="faq__list" data-reveal-group>
+      {faqs.map((item, i) => (
+        <details class="faq__item" name="faq" data-reveal data-reveal-rule style={`--i:${i}`}>
           <summary class="faq__question">
             <span>{item.question}</span>
             <span class="faq__icon" aria-hidden="true"></span>

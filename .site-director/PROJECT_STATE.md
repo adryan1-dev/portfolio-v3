@@ -50,8 +50,22 @@ REPOSITÓRIO (2026-09-12):
 - Vercel projeto adryan1-dev conectado ao repo (`vercel git connect`): push no main publica em produção
 - Portfólio antigo: USER pediu tirar do domínio sem excluir o projeto. adryan-chaves.vercel.app já responde DEPLOYMENT_NOT_FOUND e não há projeto/alias com esse nome na conta Vercel adryan1-dev (8 projetos listados via API). Se existir, está em outra conta Vercel
 
+BUILT (barra de contato no celular, 2026-09-12 — commit fa008a4):
+- src/components/layout/StickyCta.astro no BaseLayout: status + botão WhatsApp, fixa no rodapé <768px
+- Aparece depois de [data-sticky-cta-after] (hero na home, cabeçalho nos cases), some quando #contato entra ou já passou; inert quando oculta; 404 não mostra
+- Testado em 375/390/430, case, 404, 768/1440 (oculta)
+
+BUILT (sistema de motion, 2026-09-12):
+- USER: achou o site "muito estático" → DECISÃO ANTERIOR REVOGADA ("motion só no hero, sem reveal nas seções")
+- Windows do usuário com efeitos de animação LIGADOS (não era reduced-motion)
+- src/scripts/reveal.ts: IntersectionObserver marca [data-reveal-group] com .is-in uma vez (rootMargin -10% embaixo)
+- global.css: [data-reveal] sobe 24px + fade (900ms, --i × 80ms); .rise (RiseText.astro) palavras por máscara (--w × 40ms); [data-reveal-rule]::after traço de luz sobre a linha do topo (1400ms). Estado oculto só com html.js (script inline no head) e prefers-reduced-motion: no-preference. Não aninhar grupos
+- Aplicado: SectionHeader, título/intro/cards do carrossel, linhas de Serviços, etapas do Processo, Sobre (título, textos, experiência, ferramentas), projetos técnicos, FAQ, CTA final (marcas de corte por último), blocos/resumo/próximo projeto dos cases
+- Carregamento: header desce; foto do hero abre de baixo (clip-path) com zoom 1.18→1 e marcas de corte depois; cabeçalho do case com RiseText load + anim-fade
+- LCP 1440 local: 280ms no título do hero (a foto não virou LCP)
+- Testado: todos os grupos revelados após rolar (home 1440/390, case), nada invisível no fim, reduced-motion e sem JS mostram tudo, sem erros; barra, cursor, recorte e overflow sem regressão
+
 PENDENTES COM O USUÁRIO:
-- StickyCTA mobile (default aceito no plano) não implementado: explicado ao usuário, aguardando decisão
 - Analytics sem cookie (Vercel Analytics/Umami + eventos whatsapp_click, project_open, cv_download) não implementado
 - PPG: trocar status quando a Propague aprovar
 - Final QA restante: teclado/menu/carrossel em produção, revisão visual do CV em PDF

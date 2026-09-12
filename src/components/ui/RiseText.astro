@@ -1,0 +1,19 @@
+---
+// Divide um texto em palavras que sobem por uma máscara.
+// Dentro de [data-reveal-group], animam quando o grupo entra na tela; com `load`, animam no carregamento.
+interface Props {
+  text: string;
+  load?: boolean;
+  /** Índice da primeira palavra, para continuar a sequência entre linhas */
+  start?: number;
+}
+
+const { text, load = false, start = 0 } = Astro.props;
+const words = text.split(' ');
+---
+
+{words.map((word, i) => (
+  <Fragment>
+    <span class:list={['rise', { 'rise--load': load }]}><span style={`--w:${start + i}`}>{word}</span></span>{i < words.length - 1 && ' '}
+  </Fragment>
+))}
