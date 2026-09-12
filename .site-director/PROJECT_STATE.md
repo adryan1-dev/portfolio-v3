@@ -1,7 +1,15 @@
 PROJECT: Portfólio Adryan Chaves (comercial para PMEs + portfólio dev)
-CURRENT_PHASE: 13 Performance / 14 SEO (pós-deploy)
+CURRENT_PHASE: 16 Final QA (parcial) / manutenção
 STATUS: in-progress
-CURRENT_OBJECTIVE: Medir PageSpeed na produção e corrigir o que for relevante
+CURRENT_OBJECTIVE: Publicado e em dia com o código; restam decisões do usuário (ver PENDENTES)
+
+CHECKUP 2026-09-12 (17h):
+- Produção estava atrás do código (rótulo "Preview", FAQ antigo, sem nota "Incluso") → redeploy feito e verificado
+- CV em PDF era o LaTeX antigo (acentos quebrados, citava camada Gold) → regerado com `node scripts/cv.mjs` a partir de cv/curriculo.html; verificado em produção
+- Git: commit inicial criado no main (sem remoto ainda)
+- QA: overflow-x 0 em 375/390/430/768/1024/1440/1920 na home e nos 4 cases; nota "Incluso" de Serviços revisada em 390 e 1440
+- Links externos: todos 200 (LinkedIn devolve 999 para bots, normal)
+- Preview local do Astro 7 roda como daemon (`astro preview status|stop`)
 
 DEPLOY:
 - USER: publicar como vercel.app (sem domínio próprio por enquanto)
@@ -12,7 +20,8 @@ DEPLOY:
 - Portfólio antigo continua em adryan-chaves.vercel.app (não mexido)
 - OG images: scripts/og.mjs → public/og/{home,slug}.jpg + public/apple-touch-icon.png
 - Visual audit aplicado: aria-live off no modo fixado, página 404, apple-touch-icon, quebra de linha do OG
-- PENDENTE decisão do usuário: rótulo "Preview" (inglês) nos cards
+- USER: rótulo "Preview" trocado por "Protótipo publicado" (PPG, ValeFiber)
+- USER: FAQ e nota "Incluso" em Serviços: domínio, hospedagem e 3 meses de manutenção inclusos (site institucional, landing page, redesign)
 
 PERFORMANCE (Lighthouse 12 local contra produção; PSI API sem cota):
 - 1º deploy: home mobile 97/100/100/100 (LCP 1.8s, CLS 0, TBT 0, SI 4.2s); home desktop 100×4; case PPG mobile 100×4
@@ -22,12 +31,12 @@ PERFORMANCE (Lighthouse 12 local contra produção; PSI API sem cota):
 - 2º deploy (produção): home mobile 99/100/100/100 (LCP 1.6s, SI 2.8s, CLS 0, TBT 0); home desktop 100×4 (LCP 0.3s); case PPG mobile 100×4 (LCP 1.3s)
 
 PENDENTES COM O USUÁRIO:
-- Rótulo "Preview" (inglês) nos cards/cases
-- Revisar respostas do FAQ que são compromissos comerciais
-- CV cita camada Gold no DeliveryLens (não implementada no repo)
-- Projeto sem git: sugerir repositório no GitHub + integração Vercel para deploy automático
-- Portfólio antigo segue em adryan-chaves.vercel.app
-- Fase 16 (Final QA completa) ainda não executada
+- Criar repositório no GitHub + integração Vercel (deploy automático); hoje o git é só local
+- StickyCTA mobile (default aceito no plano) não implementado: confirmar se ainda quer
+- Analytics sem cookie (Vercel Analytics/Umami + eventos whatsapp_click, project_open, cv_download) não implementado
+- Portfólio antigo segue em adryan-chaves.vercel.app: tirar do ar ou redirecionar?
+- PPG: trocar status quando a Propague aprovar
+- Final QA restante: teclado/menu/carrossel em produção, revisão visual do CV em PDF
 
 BUILT (Fase 08, passo 1–3):
 - Astro 7.3.2 + Tailwind 4.3 + fonts API (fontsource Geist/Geist Mono) + sitemap; build e astro check limpos
@@ -107,13 +116,12 @@ IMPORTANT_CONSTRAINTS:
 - ppg-site.vercel.app NÃO é do Adryan; PPG = adryan1-dev.github.io/ppg-site
 - Nada depende de hover; targets ≥44px; zero overflow horizontal; sem scroll-jacking
 
-NEXT_STEP: Respostas do usuário → Fase 08 (setup Astro + header + hero)
+NEXT_STEP: Decisões do usuário em PENDENTES (GitHub remoto, StickyCTA, analytics)
 
 BLOCKERS:
-- Domínio adryan1.dev não confirmado (usado em site/canonical/robots)
-- OG image ainda não produzida
+- nenhum (domínio: decidido usar adryan1-dev.vercel.app; OG images produzidas)
 
 SPECIALIST_SKILLS_USED:
-- none yet (frontend-design e copywriting planejados para Fase 08)
+- frontend-design, copywriting
 
 CODEX_HANDOFF_STATUS: none
