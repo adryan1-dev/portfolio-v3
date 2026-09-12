@@ -1,0 +1,87 @@
+---
+// Barra de contato no celular: aparece depois da abertura da página ([data-sticky-cta-after])
+// e some quando o CTA final (#contato) entra na tela. Páginas sem o marcador não mostram a barra.
+import Button from '../ui/Button.astro';
+import Status from '../ui/Status.astro';
+import { whatsappLink } from '../../data/site';
+---
+
+<div class="sticky-cta" data-sticky-cta data-visible="false" inert>
+  <div class="container sticky-cta__inner">
+    <Status>Disponível para projetos</Status>
+    <Button href={whatsappLink()} external size="sm">WhatsApp</Button>
+  </div>
+</div>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-sticky-cta]');
+  const start = document.querySelector('[data-sticky-cta-after]');
+  const end = document.querySelector('#contato');
+
+  if (bar && start) {
+    let pastStart = false;
+    let reachedEnd = false;
+
+    const update = () => {
+      const visible = pastStart && !reachedEnd;
+      bar.dataset.visible = String(visible);
+      bar.inert = !visible;
+    };
+
+    new IntersectionObserver(([entry]) => {
+      pastStart = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+      update();
+    }).observe(start);
+
+    // Continua escondida depois do CTA final, inclusive no rodapé
+    if (end) {
+      new IntersectionObserver(([entry]) => {
+        reachedEnd = entry.isIntersecting || entry.boundingClientRect.top < 0;
+        update();
+      }).observe(end);
+    }
+  }
+</script>
+
+<style>
+  .sticky-cta {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 30;
+    padding-bottom: env(safe-area-inset-bottom);
+    border-top: 1px solid var(--color-line);
+    background-color: rgb(8 9 11 / 0.8);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    backdrop-filter: blur(12px) saturate(140%);
+    transform: translateY(100%);
+    visibility: hidden;
+    transition:
+      transform var(--dur-base) var(--ease-out),
+      visibility 0s linear var(--dur-base);
+  }
+  .sticky-cta[data-visible='true'] {
+    transform: none;
+    visibility: visible;
+    transition:
+      transform var(--dur-base) var(--ease-out),
+      visibility 0s;
+  }
+
+  .sticky-cta__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 64px;
+  }
+
+  .sticky-cta :global(.status) {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    white-space: nowrap;
+  }
+
+  @media (min-width: 768px) {
+    .sticky-cta { display: none; }
+  }
+</style>

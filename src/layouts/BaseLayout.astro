@@ -2,6 +2,7 @@
 import { Font } from 'astro:assets';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import StickyCta from '../components/layout/StickyCta.astro';
 import InvertedCursor from '../components/ui/InvertedCursor.astro';
 import { contact, site } from '../data/site';
 import '../styles/global.css';
@@ -107,6 +108,7 @@ const jsonLd = {
       <slot />
     </main>
     <Footer />
+    <StickyCta />
     <InvertedCursor />
   </body>
 </html>
