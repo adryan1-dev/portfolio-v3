@@ -45,11 +45,14 @@ BUILT (recorte no scroll, 2026-09-12 — publicado e verificado em produção, c
 - ARMADILHA: o minificador junta animation-timeline no atalho `animation` (inválido) → timeline em regra separada e mais específica
 - Testado: recorte e zoom progressivos, abre 100%, galeria com raio 20px, reduced-motion estático, overflow-x 0 nas 7 larguras
 
+REPOSITÓRIO (2026-09-12):
+- GitHub: https://github.com/adryan1-dev/portfolio-v3 (PRIVADO: .site-director tem notas internas; tornar público é decisão do usuário)
+- Vercel projeto adryan1-dev conectado ao repo (`vercel git connect`): push no main publica em produção
+- Portfólio antigo: USER pediu tirar do domínio sem excluir o projeto. adryan-chaves.vercel.app já responde DEPLOYMENT_NOT_FOUND e não há projeto/alias com esse nome na conta Vercel adryan1-dev (8 projetos listados via API). Se existir, está em outra conta Vercel
+
 PENDENTES COM O USUÁRIO:
-- Criar repositório no GitHub + integração Vercel (deploy automático); hoje o git é só local
-- StickyCTA mobile (default aceito no plano) não implementado: confirmar se ainda quer
+- StickyCTA mobile (default aceito no plano) não implementado: explicado ao usuário, aguardando decisão
 - Analytics sem cookie (Vercel Analytics/Umami + eventos whatsapp_click, project_open, cv_download) não implementado
-- Portfólio antigo segue em adryan-chaves.vercel.app: tirar do ar ou redirecionar?
 - PPG: trocar status quando a Propague aprovar
 - Final QA restante: teclado/menu/carrossel em produção, revisão visual do CV em PDF
 
