@@ -65,6 +65,12 @@ BUILT (sistema de motion, 2026-09-12):
 - LCP 1440 local: 280ms no título do hero (a foto não virou LCP)
 - Testado: todos os grupos revelados após rolar (home 1440/390, case), nada invisível no fim, reduced-motion e sem JS mostram tudo, sem erros; barra, cursor, recorte e overflow sem regressão
 
+BUILT (navbar dynamic island, 2026-09-12):
+- USER: "aquele navbar dynamic island que eu gosto" (mesmo conceito do ppg-site src/motion/header.ts) + referência de cápsula preta com botão claro
+- Header.astro: no topo largo e transparente; ao rolar além de --header-h (sentinel) vira cápsula centralizada fit-content (52px, 12px do topo; 48px/10px no celular), fundo rgb(13 15 18 / .92) com blur, borda line-strong, sombra
+- Largura anima % → fit-content com interpolate-size: allow-keywords (sem suporte: sem transição de largura); botão "Vamos conversar" vira pílula clara; "Baixar CV" recolhe (≥1024); celular: wordmark + Menu
+- Testado 1440/1024/768/390: centralizada, itens dentro, largura intermediária durante a transição, links navegam, Menu abre, volta ao topo; sem regressão (barra, motion, recorte, overflow)
+
 PENDENTES COM O USUÁRIO:
 - Analytics sem cookie (Vercel Analytics/Umami + eventos whatsapp_click, project_open, cv_download) não implementado
 - PPG: trocar status quando a Propague aprovar
