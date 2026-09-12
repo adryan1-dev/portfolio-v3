@@ -71,6 +71,12 @@ BUILT (navbar dynamic island, 2026-09-12):
 - Largura anima % → fit-content com interpolate-size: allow-keywords (sem suporte: sem transição de largura); botão "Vamos conversar" vira pílula clara; "Baixar CV" recolhe (≥1024); celular: wordmark + Menu
 - Testado 1440/1024/768/390: centralizada, itens dentro, largura intermediária durante a transição, links navegam, Menu abre, volta ao topo; sem regressão (barra, motion, recorte, overflow)
 
+BUILT (cursor gruda nos botões, 2026-09-12 — commit 69fc3aa, publicado e testado em produção):
+- USER: "não tá funcionando o attach nos botões, tá aparecendo o ponteiro" → círculo vira pílula em volta de [data-cursor-attach] (folga 6px, raio do elemento + folga; links sem raio viram pílula) e puxa o elemento 18% (propriedade `translate`, não conflita com transform)
+- Marcados: Button.astro (todos os .btn), wordmark/links/CV/Menu do header, setas do carrossel, "Pedir orçamento", wordmark e links do rodapé, CV do Sobre, voltar do case, links inline do CTA final e do FAQ. Cards e linhas inteiras não grudam
+- Cursor nativo escondido em tudo (`cursor: none !important` em body *) enquanto o círculo está ativo; volta com <dialog> aberto
+- Loop segue rodando enquanto grudado (scroll e header em cápsula movem o alvo); scroll sem mover o mouse reavalia o elemento sob o ponteiro
+
 PENDENTES COM O USUÁRIO:
 - Analytics sem cookie (Vercel Analytics/Umami + eventos whatsapp_click, project_open, cv_download) não implementado
 - PPG: trocar status quando a Propague aprovar
