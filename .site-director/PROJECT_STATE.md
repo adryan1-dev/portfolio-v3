@@ -30,6 +30,21 @@ PERFORMANCE (Lighthouse 12 local contra produção; PSI API sem cota):
 - Economia restante sinalizada (~60KiB, compressão AVIF) não vale a pena
 - 2º deploy (produção): home mobile 99/100/100/100 (LCP 1.6s, SI 2.8s, CLS 0, TBT 0); home desktop 100×4 (LCP 0.3s); case PPG mobile 100×4 (LCP 1.3s)
 
+BUILT (cursor invertido, 2026-09-12 — não publicado):
+- USER: pediu componente React "inverted-cursor" (e antes "magnetic-cursor", descartado); decidiu portar para Astro + TS vanilla, sem React/GSAP/shadcn
+- src/components/ui/InvertedCursor.astro (prop size=60) montado no BaseLayout: círculo branco mix-blend difference, lerp 0.2, loop de rAF para quando alcança o mouse; só pointerType mouse + (hover:hover and pointer:fine); reduced-motion segue sem atraso
+- Seta nativa escondida só em texto/fundo (links/botões mantêm pointer, carrossel mantém grab); com <dialog> aberto a seta volta e o círculo some
+- SelectedWork: .work__track no modo fixado cursor auto → inherit
+- Testado (Playwright): posição, atraso, parada do loop, mouseleave/enter, menu, reduced motion, celular; overflow-x 0 nas 7 larguras
+- Sobre o CTA azul o círculo fica amarelo (#d0a400, inversão do #2f5bff)
+
+BUILT (recorte no scroll, 2026-09-12 — não publicado):
+- USER: pediu um efeito de scroll "legal e pouco trabalhoso" (pesquisa em 21st.dev); escolhido reveal por clip-path inspirado em "Scroll trigger animations", reescrito em CSS puro
+- /projetos/[slug]: capa e galeria abrem de clip-path inset(12% 9% / 8% 6%) até 0 e zoom 1.14→1 enquanto atravessam a tela; as marcas de corte ficam paradas no tamanho final
+- CSS scroll-driven animations com @supports + reduced-motion; timeline nomeada (--crop) no frame porque overflow hidden o torna scroll container
+- ARMADILHA: o minificador junta animation-timeline no atalho `animation` (inválido) → timeline em regra separada e mais específica
+- Testado: recorte e zoom progressivos, abre 100%, galeria com raio 20px, reduced-motion estático, overflow-x 0 nas 7 larguras
+
 PENDENTES COM O USUÁRIO:
 - Criar repositório no GitHub + integração Vercel (deploy automático); hoje o git é só local
 - StickyCTA mobile (default aceito no plano) não implementado: confirmar se ainda quer

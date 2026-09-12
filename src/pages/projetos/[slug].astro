@@ -482,4 +482,44 @@ const facts = [
     .case__heading { grid-column: 1 / 5; }
     .case__body { grid-column: 5 / -1; }
   }
+
+  /* Recorte no scroll: a imagem entra aparada e abre até as marcas de corte enquanto atravessa a tela.
+     Só CSS (scroll-driven animations); sem suporte ou com reduced-motion, fica estática. */
+  .case__cover-frame { --frame-r: 8px; --crop-from: 12% 9%; }
+  .shot__frame { --frame-r: 8px; --crop-from: 8% 6%; }
+  .shot--mobile .shot__frame { --frame-r: 20px; }
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .case__cover-frame,
+      .shot__frame { animation: crop-open linear both; }
+      .case__cover-frame img,
+      .shot__frame :global(img) { animation: crop-zoom linear both; }
+
+      /* Timeline em regra separada e mais específica: o minificador junta tudo no atalho `animation`,
+         que não aceita timeline, e o navegador descartaria a declaração inteira.
+         Timeline nomeada no frame: com overflow hidden ele é scroll container, e view() na imagem
+         mediria o progresso contra o frame em vez da página. */
+      .case .case__cover-frame,
+      .case .shot__frame {
+        view-timeline: --crop block;
+        animation-timeline: --crop;
+        animation-range: entry 0% cover 40%;
+      }
+      .case .case__cover-frame img,
+      .case .shot__frame :global(img) {
+        animation-timeline: --crop;
+        animation-range: entry 0% cover 50%;
+      }
+    }
+  }
+
+  @keyframes crop-open {
+    from { clip-path: inset(var(--crop-from) round var(--frame-r)); }
+    to { clip-path: inset(0 round var(--frame-r)); }
+  }
+  @keyframes crop-zoom {
+    from { transform: scale(1.14); }
+    to { transform: none; }
+  }
 </style>

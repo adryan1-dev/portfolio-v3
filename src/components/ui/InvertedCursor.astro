@@ -1,0 +1,111 @@
+---
+// Círculo branco que segue o mouse e inverte as cores do que está embaixo (mix-blend-mode: difference).
+// Só aparece com mouse; toque e caneta mantêm o comportamento nativo.
+interface Props {
+  /** Diâmetro do círculo em px */
+  size?: number;
+}
+
+const { size = 60 } = Astro.props;
+---
+
+<div class="inverted-cursor" data-inverted-cursor style={`--cursor-size:${size}px`} aria-hidden="true"></div>
+
+<script>
+  const cursor = document.querySelector<HTMLElement>('[data-inverted-cursor]');
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const root = document.documentElement;
+
+  if (cursor) {
+    const target = { x: 0, y: 0 };
+    const current = { x: 0, y: 0 };
+    let frame = 0;
+    let placed = false;
+
+    const render = () => {
+      cursor.style.transform = `translate3d(${current.x}px, ${current.y}px, 0)`;
+    };
+
+    // Aproxima 20% por quadro e para o loop quando o círculo alcança o mouse
+    const tick = () => {
+      const ease = reducedMotion.matches ? 1 : 0.2;
+      current.x += (target.x - current.x) * ease;
+      current.y += (target.y - current.y) * ease;
+
+      if (Math.abs(target.x - current.x) + Math.abs(target.y - current.y) < 0.1) {
+        current.x = target.x;
+        current.y = target.y;
+        frame = 0;
+      } else {
+        frame = requestAnimationFrame(tick);
+      }
+      render();
+    };
+
+    const hide = () => {
+      cursor.dataset.visible = 'false';
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
+      if (event.pointerType !== 'mouse' || !finePointer.matches) return;
+
+      const half = cursor.offsetWidth / 2;
+      target.x = event.clientX - half;
+      target.y = event.clientY - half;
+
+      // Primeira aparição já na posição do mouse, sem atravessar a tela vindo do canto
+      if (!placed) {
+        placed = true;
+        current.x = target.x;
+        current.y = target.y;
+        render();
+        root.classList.add('has-inverted-cursor');
+      }
+
+      cursor.dataset.visible = 'true';
+      if (!frame) frame = requestAnimationFrame(tick);
+    };
+
+    document.addEventListener('pointermove', onPointerMove, { passive: true });
+    root.addEventListener('mouseleave', hide);
+    root.addEventListener('mouseenter', () => {
+      if (placed && finePointer.matches) cursor.dataset.visible = 'true';
+    });
+
+    finePointer.addEventListener('change', (event) => {
+      if (event.matches) return;
+      hide();
+      placed = false;
+      root.classList.remove('has-inverted-cursor');
+    });
+  }
+</script>
+
+<style>
+  .inverted-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 90;
+    width: var(--cursor-size);
+    height: var(--cursor-size);
+    border-radius: 50%;
+    background-color: #fff;
+    mix-blend-mode: difference;
+    pointer-events: none;
+    opacity: 0;
+    will-change: transform;
+    transition: opacity 300ms var(--ease-out);
+  }
+  .inverted-cursor[data-visible='true'] { opacity: 1; }
+
+  /* Esconde a seta do sistema só em texto e fundo: links, botões e o carrossel mantêm o cursor próprio.
+     Com um <dialog> aberto o círculo fica abaixo da camada do modal, então a seta volta. */
+  :global(html.has-inverted-cursor:not(:has(dialog[open])) body) { cursor: none; }
+  :global(html:has(dialog[open])) .inverted-cursor { display: none; }
+
+  @media (hover: none), (pointer: coarse) {
+    .inverted-cursor { display: none; }
+  }
+</style>
