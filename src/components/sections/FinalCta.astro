@@ -1,0 +1,98 @@
+---
+import Button from '../ui/Button.astro';
+import Status from '../ui/Status.astro';
+import { contact, site, whatsappLink } from '../../data/site';
+---
+
+<section id="contato" class="section" aria-labelledby="contato-title">
+  <div class="container">
+    <div class="cta crop">
+      <p class="cta__eyebrow">Tem um projeto em mente?</p>
+      <h2 id="contato-title" class="cta__title">
+        <span class="cta__line">Sua empresa pode ser</span>
+        <span class="cta__line">o próximo projeto.</span>
+      </h2>
+      <p class="cta__text">
+        Se você precisa criar um site do zero ou melhorar o que já tem, conte o que precisa. Respondo com os
+        próximos passos.
+      </p>
+
+      <div class="cta__actions">
+        <Button href={whatsappLink()} external>Conversar no WhatsApp</Button>
+        <Button href={`mailto:${contact.email}`} variant="ghost">Enviar e-mail</Button>
+      </div>
+
+      <div class="cta__footer">
+        <Status />
+        <p>
+          Recrutando?{' '}<a href={site.cv} download="adryan-chaves-cv.pdf">Baixe meu currículo</a> ou fale
+          comigo no{' '}<a href={contact.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    --crop-o: 14px;
+    padding: clamp(28px, 6vw, 96px);
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    background-color: var(--color-bg-2);
+  }
+
+  .cta__eyebrow {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-muted);
+  }
+
+  .cta__title {
+    margin-top: 1rem;
+    font-size: clamp(2.5rem, 1.5rem + 4.4vw, 6rem);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+  }
+  .cta__line { display: block; }
+
+  .cta__text {
+    max-inline-size: 46ch;
+    margin-top: 1.5rem;
+    font-size: var(--fs-lead);
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  .cta__actions {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .cta__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-line);
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+  }
+  .cta__footer a {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-decoration-color: var(--color-line-strong);
+    text-underline-offset: 4px;
+    transition: text-decoration-color var(--dur-fast);
+  }
+  .cta__footer a:hover { text-decoration-color: currentColor; }
+
+  @media (min-width: 768px) {
+    .cta__actions { display: flex; flex-wrap: wrap; }
+  }
+</style>

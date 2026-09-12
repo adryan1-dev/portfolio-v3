@@ -1,0 +1,29 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<p class:list={['status', className]}>
+  <span class="status__dot" aria-hidden="true"></span>
+  <slot>Disponível para novos projetos</slot>
+</p>
+
+<style>
+  .status {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+  }
+  .status__dot {
+    flex: none;
+    margin-top: calc((1lh - 8px) / 2);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgb(47 91 255 / 0.2);
+  }
+</style>

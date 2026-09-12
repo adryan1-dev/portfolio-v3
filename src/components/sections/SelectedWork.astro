@@ -1,0 +1,205 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from '../work/ProjectCard.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const total = String(projects.length).padStart(2, '0');
+---
+
+<section id="projetos" class="work" aria-labelledby="work-title" data-carousel>
+  <!-- No modo fixado, o JS dá a esta área a altura do percurso horizontal -->
+  <div class="work__pin" data-carousel-pin>
+    <div class="work__sticky">
+      <div class="container work__head">
+        <div>
+          <h2 id="work-title" class="work__title">Projetos selecionados</h2>
+          <p class="work__intro">Sites para empresas e produtos que desenhei e desenvolvi, do layout ao deploy.</p>
+        </div>
+
+        <div class="work__buttons">
+          <button type="button" class="work__button" data-carousel-prev aria-label="Projeto anterior" disabled>
+            <span aria-hidden="true">←</span>
+          </button>
+          <button type="button" class="work__button" data-carousel-next aria-label="Próximo projeto">
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+
+      <ul
+        class="work__track"
+        data-carousel-track
+        role="list"
+        aria-roledescription="carrossel"
+        aria-label="Projetos selecionados"
+      >
+        {projects.map((project, i) => (
+          <li class="work__slide" aria-roledescription="slide" aria-label={`${i + 1} de ${projects.length}`}>
+            <ProjectCard project={project} index={i} />
+          </li>
+        ))}
+      </ul>
+
+      <div class="container work__progress">
+        <p class="work__counter mono" aria-live="polite">
+          <span data-carousel-current>01</span> / {total}
+        </p>
+        <div class="work__bar" aria-hidden="true"><span data-carousel-bar></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initCarousel } from '../../scripts/carousel';
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach(initCarousel);
+</script>
+
+<style>
+  .work {
+    --card-w: 84vw;
+    padding-block: clamp(48px, 6vw, 96px) calc(var(--section-y) / 2);
+  }
+
+  .work__head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .work__title {
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+  .work__intro {
+    max-inline-size: 44ch;
+    margin-top: 1rem;
+    font-size: 1.0625rem;
+    color: var(--color-muted);
+  }
+
+  .work__buttons { display: none; gap: 0.5rem; }
+  .work__button {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 6px;
+    font-size: 1.125rem;
+    transition:
+      border-color var(--dur-fast) var(--ease-out),
+      opacity var(--dur-fast) var(--ease-out);
+  }
+  .work__button:hover:not(:disabled) { border-color: rgb(255 255 255 / 0.4); }
+  .work__button:disabled { opacity: 0.35; cursor: default; }
+
+  /* Faixa full-bleed à direita: começa alinhada ao grid e sangra até a borda da tela */
+  .work__track {
+    --pad: max(var(--margin), calc((100% - var(--container)) / 2 + var(--margin)));
+    position: relative;
+    display: flex;
+    gap: var(--gutter);
+    margin-top: clamp(32px, 4vw, 56px);
+    padding: 16px var(--pad);
+    margin-block-end: -16px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--pad);
+    scrollbar-width: none;
+  }
+  .work__track::-webkit-scrollbar { display: none; }
+  .work__track.is-dragging {
+    scroll-snap-type: none;
+    cursor: grabbing;
+    user-select: none;
+  }
+
+  .work__slide {
+    flex: 0 0 var(--card-w);
+    scroll-snap-align: start;
+  }
+
+  .work__progress {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+  .work__counter {
+    flex: none;
+    color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .work__bar {
+    position: relative;
+    flex: 1;
+    height: 1px;
+    overflow: hidden;
+    background-color: var(--color-line-strong);
+  }
+  .work__bar span {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-text);
+    transform: scaleX(0.25);
+    transform-origin: left;
+  }
+
+  @media (pointer: fine) {
+    .work__track { cursor: grab; }
+  }
+
+  /* Cards compactos: vários projetos visíveis ao mesmo tempo, o próximo sempre cortado na borda */
+  @media (min-width: 768px) {
+    .work { --card-w: 46vw; }
+    .work__buttons { display: flex; }
+  }
+  @media (min-width: 1024px) {
+    .work { --card-w: 40vw; }
+  }
+  @media (min-width: 1440px) {
+    .work { --card-w: 34vw; }
+  }
+  @media (min-width: 1920px) {
+    .work { --card-w: min(30vw, 560px); }
+  }
+
+  /* Modo fixado (classe aplicada pelo JS no desktop com mouse).
+     Tudo precisa caber em uma tela: a largura do card também respeita a altura da janela. */
+  .work.is-pinned {
+    --card-w: min(34vw, 560px, calc((100vh - 580px) * 1.6));
+    padding-block: 0;
+  }
+  .work.is-pinned .work__sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: var(--header-h);
+    overflow: clip;
+  }
+  .work.is-pinned .work__track {
+    margin-top: clamp(16px, 2.5vh, 40px);
+    overflow: visible;
+    scroll-snap-type: none;
+    cursor: auto;
+    will-change: transform;
+  }
+  .work.is-pinned .work__progress { margin-top: 1.25rem; }
+  .work.is-pinned :global(.card__summary) { -webkit-line-clamp: 2; }
+
+  /* Telas baixas (notebooks 1366×768, 1536×864): versão enxuta para os cards não encolherem demais */
+  @media (max-height: 899px) {
+    .work.is-pinned { --card-w: min(34vw, 560px, calc((100vh - 420px) * 1.6)); }
+    .work.is-pinned .work__intro,
+    .work.is-pinned :global(.card__summary),
+    .work.is-pinned :global(.card__stack) { display: none; }
+  }
+</style>

@@ -1,0 +1,205 @@
+---
+import { getImage } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const { title, category, niche, year, status, summary, stack, cover } = project.data;
+
+const [wideAvif, wideWebp, tallAvif, tallWebp] = await Promise.all([
+  getImage({ src: cover.wide, widths: [600, 900, 1200], format: 'avif' }),
+  getImage({ src: cover.wide, widths: [600, 900, 1200], format: 'webp' }),
+  getImage({ src: cover.tall, widths: [400, 700, 1000], format: 'avif' }),
+  getImage({ src: cover.tall, widths: [400, 700, 1000], format: 'webp' }),
+]);
+
+// Acompanha --card-w de SelectedWork
+const wideSizes = '(min-width: 1920px) 560px, (min-width: 1440px) 34vw, (min-width: 1024px) 40vw, 46vw';
+const tallSizes = '84vw';
+const number = String(index + 1).padStart(2, '0');
+---
+
+<article class="card">
+  <a href={`/projetos/${project.id}/`} class="card__link" draggable="false">
+    <div class="card__cover crop">
+      <div class="card__frame">
+        <picture>
+          <source media="(min-width: 768px)" type="image/avif" srcset={wideAvif.srcSet.attribute} sizes={wideSizes} />
+          <source media="(min-width: 768px)" type="image/webp" srcset={wideWebp.srcSet.attribute} sizes={wideSizes} />
+          <source type="image/avif" srcset={tallAvif.srcSet.attribute} sizes={tallSizes} />
+          <img
+            src={tallWebp.src}
+            srcset={tallWebp.srcSet.attribute}
+            sizes={tallSizes}
+            alt={cover.alt}
+            loading="lazy"
+            decoding="async"
+            draggable="false"
+          />
+        </picture>
+      </div>
+    </div>
+
+    <div class="card__meta">
+      <div class="card__top">
+        <span class="card__index mono">{number}</span>
+        <span class="card__status mono">{status}</span>
+      </div>
+
+      <h3 class="card__title">{title}</h3>
+      <p class="card__facts mono">
+        <span>{category} / {niche}</span>
+        <span>{year}</span>
+      </p>
+
+      <p class="card__summary">{summary}</p>
+
+      <ul class="card__stack" role="list">
+        {stack.map((item) => <li class="mono">{item}</li>)}
+      </ul>
+
+      <span class="card__cta">
+        Ver case<span class="card__arrow" aria-hidden="true">→</span>
+      </span>
+    </div>
+  </a>
+</article>
+
+<style>
+  .card { height: 100%; }
+
+  .card__link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    -webkit-user-drag: none;
+  }
+
+  /* Marcas de corte aparecem no hover/foco: a assinatura do site marcando a peça em foco */
+  .card__cover { --crop-o: 8px; --crop-l: 12px; --crop-c: var(--color-line-strong); }
+  .card__cover::before {
+    opacity: 0;
+    inset: -2px;
+    transition:
+      opacity var(--dur-base) var(--ease-out),
+      inset var(--dur-base) var(--ease-out);
+  }
+
+  .card__frame {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: var(--color-surface);
+  }
+  .card__frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+
+  .card__meta {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-top: 1rem;
+  }
+
+  .card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .card__index { color: var(--color-faint); }
+  .card__status {
+    padding: 0.1875rem 0.5rem;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 4px;
+    font-size: 0.6875rem;
+    color: var(--color-muted);
+  }
+
+  .card__title {
+    margin-top: 0.875rem;
+    font-size: clamp(1.375rem, 1.2rem + 0.5vw, 1.75rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+  }
+
+  .card__facts {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    color: var(--color-faint);
+  }
+  .card__facts span:last-child { flex: none; }
+
+  /* Resumo com altura fixa: cards alinhados mesmo com textos de tamanhos diferentes */
+  .card__summary {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    margin-top: 0.875rem;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--color-muted);
+  }
+
+  .card__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-top: 1rem;
+  }
+  .card__stack li {
+    padding: 0.1875rem 0.5rem;
+    border: 1px solid var(--color-line);
+    border-radius: 4px;
+    font-size: 0.6875rem;
+    color: var(--color-muted);
+  }
+
+  .card__cta {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 0.375rem;
+    min-height: 44px;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+  .card__arrow {
+    display: inline-block;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .card__link:focus-visible { outline: none; }
+  .card__link:focus-visible .card__cover::before,
+  .card__link:hover .card__cover::before {
+    opacity: 1;
+    inset: calc(var(--crop-o) * -1);
+  }
+  .card__link:focus-visible .card__frame {
+    outline: 2px solid var(--color-accent-text);
+    outline-offset: 3px;
+  }
+
+  @media (hover: hover) {
+    .card__link:hover .card__frame img { transform: scale(1.03); }
+    .card__link:hover .card__arrow { transform: translateX(3px); }
+  }
+
+  @media (min-width: 768px) {
+    .card__frame { aspect-ratio: 16 / 10; }
+  }
+</style>

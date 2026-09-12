@@ -1,0 +1,8 @@
+node_modules
+dist
+.astro
+.shots
+.shots-build.log
+.site-director
+.env*
+.vercel

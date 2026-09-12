@@ -1,0 +1,110 @@
+---
+import { Font } from 'astro:assets';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import { contact, site } from '../data/site';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Nós extras de JSON-LD da página (ex.: CreativeWork e BreadcrumbList nos cases) */
+  schema?: Record<string, unknown>[];
+  /** Imagem de compartilhamento 1200×630 gerada por scripts/og.mjs */
+  image?: string;
+  imageAlt?: string;
+}
+
+const {
+  title = site.title,
+  description = site.description,
+  schema = [],
+  image = '/og/home.jpg',
+  imageAlt = 'Adryan Chaves ao lado do título Sites à altura da empresa que você construiu.',
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
+const imageUrl = new URL(image, Astro.site ?? site.url).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${site.url}/#person`,
+      name: site.person,
+      jobTitle: site.role,
+      email: `mailto:${contact.email}`,
+      url: site.url,
+      sameAs: [contact.linkedin, contact.github],
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: site.location.city,
+        addressRegion: site.location.region,
+        addressCountry: site.location.country,
+      },
+      alumniOf: { '@type': 'CollegeOrUniversity', name: 'Faculdade Descomplica' },
+      knowsAbout: ['Criação de sites', 'Landing pages', 'React', 'Node.js', 'PostgreSQL', 'Python'],
+    },
+    {
+      '@type': 'ProfessionalService',
+      '@id': `${site.url}/#service`,
+      name: `${site.person} — Criação de sites`,
+      url: site.url,
+      founder: { '@id': `${site.url}/#person` },
+      telephone: `+${contact.whatsapp}`,
+      areaServed: ['Almenara', 'Vale do Jequitinhonha', 'Minas Gerais', 'Brasil'],
+      serviceType: ['Site institucional', 'Landing page', 'Redesign de site', 'Desenvolvimento web'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${site.url}/#website`,
+      url: site.url,
+      name: site.name,
+      inLanguage: site.lang,
+    },
+    ...schema,
+  ],
+};
+---
+
+<!doctype html>
+<html lang={site.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#08090b" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={site.locale} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+
+    <Font cssVariable="--font-manrope" preload />
+    <Font cssVariable="--font-geist-mono" />
+
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+    <Header />
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

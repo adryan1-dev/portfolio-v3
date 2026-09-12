@@ -1,0 +1,250 @@
+---
+import Button from '../ui/Button.astro';
+import Status from '../ui/Status.astro';
+import { contact, nav, site, whatsappLink } from '../../data/site';
+---
+
+<div class="scroll-sentinel" data-scroll-sentinel aria-hidden="true"></div>
+
+<header class="site-header" data-header>
+  <div class="container site-header__inner">
+    <a href="/" class="wordmark">{site.name}</a>
+
+    <nav class="site-nav" aria-label="Principal">
+      <ul>
+        {nav.map((item) => (
+          <li><a href={item.href} class="site-nav__link">{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <a href={site.cv} download class="site-header__cv"><span class="link">Baixar CV</span></a>
+      <Button href={whatsappLink()} external size="sm">Vamos conversar</Button>
+    </div>
+
+    <button
+      type="button"
+      class="menu-toggle"
+      data-menu-open
+      aria-haspopup="dialog"
+      aria-expanded="false"
+      aria-controls="menu"
+    >
+      Menu
+    </button>
+  </div>
+</header>
+
+<dialog id="menu" class="menu" data-menu aria-label="Menu">
+  <div class="container menu__inner">
+    <div class="menu__top">
+      <a href="/" class="wordmark">{site.name}</a>
+      <button type="button" class="menu-toggle" data-menu-close autofocus>Fechar</button>
+    </div>
+
+    <nav aria-label="Principal">
+      <ul class="menu__list">
+        {nav.map((item) => (
+          <li><a href={item.href} class="menu__link">{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="menu__footer">
+      <Status class="menu__status" />
+      <Button href={whatsappLink()} external>Falar no WhatsApp</Button>
+      <div class="menu__secondary">
+        <a href={site.cv} download>Baixar CV</a>
+        <a href={`mailto:${contact.email}`}>{contact.email}</a>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const sentinel = document.querySelector('[data-scroll-sentinel]');
+  if (header && sentinel) {
+    new IntersectionObserver(([entry]) => {
+      header.dataset.scrolled = String(!entry.isIntersecting);
+    }).observe(sentinel);
+  }
+
+  const menu = document.querySelector<HTMLDialogElement>('[data-menu]');
+  const openButton = document.querySelector<HTMLButtonElement>('[data-menu-open]');
+  if (menu && openButton) {
+    openButton.addEventListener('click', () => {
+      menu.showModal();
+      openButton.setAttribute('aria-expanded', 'true');
+    });
+    menu.addEventListener('close', () => openButton.setAttribute('aria-expanded', 'false'));
+    menu.querySelectorAll('[data-menu-close], a').forEach((el) => {
+      el.addEventListener('click', () => menu.close());
+    });
+    window.matchMedia('(min-width: 768px)').addEventListener('change', (event) => {
+      if (event.matches && menu.open) menu.close();
+    });
+  }
+</script>
+
+<style>
+  .scroll-sentinel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 24px;
+    pointer-events: none;
+  }
+
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 40;
+    border-bottom: 1px solid transparent;
+    transition:
+      background-color var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      backdrop-filter var(--dur-base) var(--ease-out);
+  }
+  .site-header[data-scrolled='true'] {
+    background-color: rgb(8 9 11 / 0.72);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    backdrop-filter: blur(12px) saturate(140%);
+    border-color: var(--color-line);
+  }
+
+  .site-header__inner {
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 1.0625rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .site-nav,
+  .site-header__actions,
+  .site-header__cv { display: none; }
+
+  .site-nav__link,
+  .site-header__cv {
+    padding-block: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    transition: color var(--dur-fast);
+  }
+  .site-nav__link:hover,
+  .site-header__cv:hover { color: var(--color-text); }
+
+  .menu-toggle {
+    min-height: 44px;
+    min-width: 44px;
+    margin-inline-end: -0.5rem;
+    padding-inline: 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  @media (min-width: 768px) {
+    .site-nav { display: block; }
+    .site-nav ul { display: flex; gap: 1.25rem; }
+    .site-header__actions { display: flex; align-items: center; gap: 1.5rem; }
+    [data-menu-open] { display: none; }
+  }
+  @media (min-width: 1024px) {
+    .site-nav ul { gap: 2rem; }
+    .site-header__cv { display: inline-block; }
+  }
+
+  /* Menu mobile */
+  .menu {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    opacity: 0;
+    transform: translateY(-8px);
+    transition:
+      opacity var(--dur-base) var(--ease-out),
+      transform var(--dur-base) var(--ease-out),
+      overlay var(--dur-base) allow-discrete,
+      display var(--dur-base) allow-discrete;
+  }
+  .menu[open] { opacity: 1; transform: none; }
+  @starting-style {
+    .menu[open] { opacity: 0; transform: translateY(-8px); }
+  }
+  .menu::backdrop { background: transparent; }
+
+  .menu__inner {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+  }
+
+  .menu__top {
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .menu__list {
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--color-line);
+  }
+  .menu__link {
+    display: flex;
+    align-items: center;
+    min-height: 72px;
+    font-size: clamp(2rem, 9vw, 2.75rem);
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .menu__link:active { color: var(--color-accent-text); }
+
+  .menu__footer {
+    margin-top: auto;
+    padding-top: 2.5rem;
+    display: grid;
+    gap: 1rem;
+  }
+  .menu__footer :global(.status) { font-size: 0.875rem; color: var(--color-muted); }
+  .menu__footer :global(.btn) { width: 100%; }
+
+  .menu__secondary {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    column-gap: 1rem;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+  .menu__secondary a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  :global(html:has(.menu[open])) { overflow: hidden; }
+</style>

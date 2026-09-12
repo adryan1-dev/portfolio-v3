@@ -1,0 +1,177 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-bg: #08090b;
+  --color-bg-2: #0d0f12;
+  --color-surface: #111318;
+  --color-text: #f5f5f5;
+  --color-muted: #9299a5;
+  --color-faint: #7c8390;
+  --color-line: rgb(255 255 255 / 0.08);
+  --color-line-strong: rgb(255 255 255 / 0.16);
+  --color-accent: #2f5bff;
+  --color-accent-text: #5b82ff;
+
+  /* Manrope: títulos, subtítulos, texto, botões e navegação. Geist Mono: só labels técnicos pequenos. */
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 90rem;
+  --breakpoint-2xl: 120rem;
+}
+
+:root {
+  color-scheme: dark;
+
+  --margin: 20px;
+  --gutter: 16px;
+  --container: 1680px;
+  --header-h: 56px;
+  --section-y: clamp(96px, 12vw, 192px);
+
+  --fs-display: clamp(2.75rem, 1.6rem + 4.6vw, 6.5rem);
+  --fs-h2: clamp(2.25rem, 1.5rem + 3.2vw, 4.5rem);
+  --fs-h3: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
+  --fs-lead: clamp(1.125rem, 1rem + 0.4vw, 1.375rem);
+  --fs-mono: 0.75rem;
+
+  --dur-fast: 200ms;
+  --dur-base: 400ms;
+  --dur-slow: 600ms;
+}
+
+@media (min-width: 400px) {
+  :root { --margin: 24px; }
+}
+@media (min-width: 768px) {
+  :root { --margin: 32px; --gutter: 20px; --header-h: 64px; }
+}
+@media (min-width: 1024px) {
+  :root { --margin: 40px; --gutter: 24px; }
+}
+@media (min-width: 1440px) {
+  :root { --margin: 64px; }
+}
+@media (min-width: 1920px) {
+  :root { --gutter: 32px; }
+}
+
+@layer base {
+  html {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: calc(var(--header-h) + 16px);
+  }
+
+  body {
+    min-height: 100dvh;
+    overflow-x: clip;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+
+  a, button { -webkit-tap-highlight-color: transparent; }
+  button { cursor: pointer; }
+
+  ::selection { background-color: var(--color-accent); color: #fff; }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-text);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--margin);
+}
+
+/* Metade do respiro em cada lado: duas seções vizinhas somam --section-y */
+.section {
+  padding-block: calc(var(--section-y) / 2);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--color-text);
+  color: var(--color-bg);
+  border-radius: 6px;
+  transform: translateY(-150%);
+}
+.skip-link:focus-visible { transform: none; }
+
+/* Sublinhado que se desenha no hover — aplicado ao texto, não ao alvo de toque */
+.link {
+  background: linear-gradient(currentColor 0 0) 0 100% / 0 1px no-repeat;
+  transition: background-size var(--dur-base) var(--ease-out), color var(--dur-fast);
+}
+a:hover .link,
+.link:hover { background-size: 100% 1px; }
+
+/* Marcas de corte: os quatro cantos, fora da caixa */
+.crop { position: relative; --crop-o: 12px; --crop-l: 14px; --crop-c: var(--color-line-strong); }
+.crop::before {
+  content: '';
+  position: absolute;
+  inset: calc(var(--crop-o) * -1);
+  pointer-events: none;
+  background:
+    linear-gradient(var(--crop-c) 0 0) top left / var(--crop-l) 1px,
+    linear-gradient(var(--crop-c) 0 0) top left / 1px var(--crop-l),
+    linear-gradient(var(--crop-c) 0 0) top right / var(--crop-l) 1px,
+    linear-gradient(var(--crop-c) 0 0) top right / 1px var(--crop-l),
+    linear-gradient(var(--crop-c) 0 0) bottom left / var(--crop-l) 1px,
+    linear-gradient(var(--crop-c) 0 0) bottom left / 1px var(--crop-l),
+    linear-gradient(var(--crop-c) 0 0) bottom right / var(--crop-l) 1px,
+    linear-gradient(var(--crop-c) 0 0) bottom right / 1px var(--crop-l);
+  background-repeat: no-repeat;
+}
+
+/* Motion: um único momento orquestrado no carregamento */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+}
+@keyframes rise {
+  from { transform: translateY(110%); }
+}
+.anim-fade {
+  animation: fade-up 600ms var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

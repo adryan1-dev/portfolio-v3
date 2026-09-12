@@ -1,0 +1,156 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import { services } from '../../data/content';
+import { whatsappLink } from '../../data/site';
+---
+
+<section id="servicos" class="section" aria-labelledby="servicos-title">
+  <SectionHeader
+    id="servicos-title"
+    title="O que posso construir"
+    intro="Do primeiro site da empresa à reformulação de um site que já não representa o negócio. Veja qual formato combina com você."
+  />
+
+  <div class="container">
+    <ul class="services" role="list">
+      {services.map((service) => (
+        <li class="service">
+          {/* Quem: nome do serviço e para quem ele é */}
+          <div class="service__who">
+            <h3 class="service__title">{service.title}</h3>
+            <p class="service__audience">
+              <span class="service__label mono">Para quem é</span>
+              {service.audience}
+            </p>
+          </div>
+
+          {/* O quê: descrição e o que inclui */}
+          <div class="service__what">
+            <p class="service__text">{service.description}</p>
+            <ul class="service__includes" role="list" aria-label={`O que inclui: ${service.title}`}>
+              {service.includes.map((item) => <li class="mono">{item}</li>)}
+            </ul>
+          </div>
+
+          <a
+            class="service__cta"
+            href={whatsappLink(service.message)}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Pedir orçamento de ${service.title.toLowerCase()} pelo WhatsApp`}
+          >
+            <span class="link">Pedir orçamento</span><span class="service__arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <p class="services__note">
+      <span class="services__note-label mono">Incluso</span>
+      <span>
+        Sites institucionais, landing pages e redesigns incluem domínio, hospedagem e 3 meses de manutenção para
+        pequenas alterações ou correções.
+      </span>
+    </p>
+  </div>
+</section>
+
+<style>
+  .services { border-bottom: 1px solid var(--color-line); }
+
+  .services__note {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1rem;
+    margin-top: 1.5rem;
+    font-size: 1.0625rem;
+    line-height: 1.5;
+  }
+  .services__note-label {
+    flex: none;
+    padding: 0.1875rem 0.5rem;
+    border: 1px solid var(--color-accent-text);
+    border-radius: 4px;
+    font-size: 0.6875rem;
+    color: var(--color-accent-text);
+  }
+
+  .service {
+    display: grid;
+    gap: 1rem var(--gutter);
+    padding-block: clamp(28px, 3.5vw, 48px);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .service__title {
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+  }
+
+  /* "Para quem é" vem logo abaixo do nome: é o que o visitante procura para se reconhecer */
+  .service__audience {
+    max-inline-size: 42ch;
+    margin-top: 1rem;
+    font-size: 1.0625rem;
+    line-height: 1.5;
+  }
+  .service__label {
+    display: block;
+    margin-bottom: 0.375rem;
+    color: var(--color-faint);
+  }
+
+  .service__text {
+    max-inline-size: 48ch;
+    color: var(--color-muted);
+  }
+
+  .service__includes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-top: 0.875rem;
+  }
+  .service__includes li {
+    padding: 0.1875rem 0.5rem;
+    border: 1px solid var(--color-line);
+    border-radius: 4px;
+    font-size: 0.6875rem;
+    color: var(--color-muted);
+  }
+
+  .service__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    gap: 0.375rem;
+    min-height: 44px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+  .service__arrow {
+    display: inline-block;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+  .service__cta:hover .service__arrow { transform: translate(2px, -2px); }
+
+  @media (min-width: 768px) {
+    .service {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      align-items: start;
+    }
+    .service__who { grid-column: 1; grid-row: 1 / span 2; }
+    .service__what { grid-column: 2; grid-row: 1; padding-top: 0.25rem; }
+    .service__cta { grid-column: 2; grid-row: 2; }
+  }
+
+  @media (min-width: 1024px) {
+    .service { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+    .service__who { grid-column: 1 / 5; grid-row: 1; }
+    .service__what { grid-column: 5 / 10; grid-row: 1; }
+    .service__cta { grid-column: 10 / -1; grid-row: 1; justify-self: end; }
+  }
+</style>

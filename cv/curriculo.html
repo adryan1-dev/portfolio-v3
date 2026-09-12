@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <title>Currículo — Adryan Chaves Torres Pinto</title>
+    <meta name="author" content="Adryan Chaves Torres Pinto" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=block"
+    />
+    <style>
+      /* Fonte do currículo em PDF. Gere com: node scripts/cv.mjs */
+      body {
+        margin: 0;
+        font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+        font-size: 10.2pt;
+        line-height: 1.38;
+        color: #111;
+      }
+      a { color: inherit; text-decoration: none; }
+
+      header { text-align: center; margin-bottom: 12pt; }
+      h1 { margin: 0; font-size: 18pt; font-weight: 700; }
+      .contact { margin-top: 3pt; font-size: 9.2pt; }
+      .contact span + span::before { content: ' • '; }
+
+      h2 {
+        margin: 11pt 0 5pt;
+        padding-bottom: 2pt;
+        border-bottom: 0.8pt solid #111;
+        font-size: 12.5pt;
+        font-weight: 700;
+        break-after: avoid;
+      }
+
+      p { margin: 0; }
+      .skills p { margin-bottom: 1.6pt; }
+      strong { font-weight: 700; }
+
+      .entry { margin-bottom: 8pt; }
+      .row { display: flex; justify-content: space-between; gap: 12pt; break-after: avoid; }
+      .row span:last-child { flex: none; text-align: right; }
+
+      ul { margin: 3pt 0 3pt 13pt; padding: 0; }
+      li { margin-bottom: 1.6pt; break-inside: avoid; }
+      .stack { margin-top: 2pt; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Adryan Chaves Torres Pinto</h1>
+      <p class="contact">
+        <span>Almenara, MG</span>
+        <span><a href="mailto:adryan1.dev@gmail.com">adryan1.dev@gmail.com</a></span>
+        <span><a href="https://www.linkedin.com/in/adryan1-dev/">linkedin.com/in/adryan1-dev</a></span>
+        <span><a href="https://github.com/adryan1-dev">github.com/adryan1-dev</a></span>
+        <span><a href="https://adryan1-dev.vercel.app">adryan1-dev.vercel.app</a></span>
+      </p>
+    </header>
+
+    <section>
+      <h2>Resumo Profissional</h2>
+      <p>
+        Desenvolvedor Full Stack com foco em Software Engineering e desenvolvimento de aplicações web. Experiência
+        prática com JavaScript, React, Node.js, Express.js e PostgreSQL, atuando no desenvolvimento de interfaces, APIs
+        REST, operações CRUD, regras de negócio, integração frontend/backend e persistência de dados. Conhecimento em
+        arquitetura de software, separação de responsabilidades, Git, Docker, CI/CD e deploy. Experiência adicional com
+        Python, SQL, Engenharia de Dados e automação de pipelines. Perfil orientado à resolução de problemas,
+        aprendizado contínuo e desenvolvimento de soluções escaláveis e organizadas.
+      </p>
+    </section>
+
+    <section class="skills">
+      <h2>Competências Técnicas</h2>
+      <p><strong>Frontend e Web:</strong> JavaScript, React, Vite, HTML5, CSS3, Tailwind CSS, Bootstrap, Responsive Design, Componentização, UI/UX</p>
+      <p><strong>Backend e APIs:</strong> Node.js, Express.js, APIs REST, CRUD, Validação de Dados, Regras de Negócio, Middleware, Upload de Arquivos, Integração Frontend/Backend</p>
+      <p><strong>Banco de Dados e SQL:</strong> PostgreSQL, SQL, Supabase, Modelagem de Dados, Relacionamentos, JOIN, CTE, GROUP BY, Window Functions, Persistência Relacional</p>
+      <p><strong>Engenharia de Software:</strong> Arquitetura de Software, Separação de Responsabilidades, Modularização, Debugging, Tratamento de Erros, Boas Práticas de Desenvolvimento</p>
+      <p><strong>DevOps e Ferramentas:</strong> Git, GitHub, Docker, Docker Compose, GitHub Actions, CI/CD, Linux, Vercel, Deploy</p>
+      <p><strong>Dados e Automação:</strong> Python, Pandas, Requests, Apache Airflow, ETL, Pipelines de Dados, Arquitetura Medalhão (camadas Bronze e Silver)</p>
+      <p><strong>Soft Skills:</strong> Resolução de Problemas, Pensamento Analítico, Comunicação, Trabalho em Equipe, Adaptabilidade e Aprendizado Contínuo</p>
+      <p><strong>Idiomas:</strong> Português (Nativo), Inglês (Avançado)</p>
+    </section>
+
+    <section>
+      <h2>Formação</h2>
+      <div class="entry">
+        <p class="row"><strong>Faculdade Descomplica Digital</strong><span>Remoto</span></p>
+        <p class="row"><span>Tecnólogo em Análise e Desenvolvimento de Sistemas</span><span>2024 – 2026</span></p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Projetos</h2>
+
+      <div class="entry">
+        <p class="row">
+          <strong>Lbook – Aplicação Full Stack para Gestão de Leituras</strong>
+          <span><a href="https://github.com/adryan1-dev/lbook">GitHub</a> • <a href="https://lbook-woad.vercel.app">App</a></span>
+        </p>
+        <ul>
+          <li>Desenvolvi uma aplicação web Full Stack para catalogação e gerenciamento de leituras, com funcionalidades de cadastro, consulta, atualização, exclusão, busca, filtros, resenhas e acompanhamento de progresso.</li>
+          <li>Desenvolvi o frontend utilizando React, Vite e Tailwind CSS, aplicando componentização, reutilização de componentes, gerenciamento de estado, formulários, modais e interfaces responsivas.</li>
+          <li>Publiquei a versão com login utilizando Supabase (autenticação, PostgreSQL com Row Level Security e Storage) e Vercel, com uma estante individual por conta.</li>
+          <li>Desenvolvi uma API REST utilizando Node.js e Express.js, implementando endpoints, operações CRUD, validação de dados, regras de negócio, middleware e tratamento de requisições.</li>
+          <li>Implementei persistência de dados utilizando PostgreSQL e SQL, estruturando relacionamentos, consultas e integração entre a camada de aplicação e o banco de dados relacional.</li>
+          <li>Implementei upload de arquivos utilizando Multer e integração entre frontend e backend por meio de multipart/form-data.</li>
+          <li>Estruturei o projeto como monorepo utilizando npm workspaces, separando as aplicações client e server e aplicando princípios de modularização e separação de responsabilidades.</li>
+          <li>Desenvolvi uma versão de demonstração utilizando GitHub Pages e localStorage, permitindo apresentar o projeto sem dependência de infraestrutura de backend.</li>
+          <li>Configurei automação de deploy utilizando GitHub Actions e práticas de CI/CD para publicação da aplicação.</li>
+        </ul>
+        <p class="stack"><strong>Stack:</strong> JavaScript, React, Vite, Tailwind CSS, Supabase, Node.js, Express.js, PostgreSQL, SQL, Multer, Git, GitHub, GitHub Actions, Vercel, CI/CD</p>
+      </div>
+
+      <div class="entry">
+        <p class="row">
+          <strong>DeliveryLens Analytics – Pipeline de Engenharia de Dados</strong>
+          <span><a href="https://github.com/adryan1-dev/DeliveryLens-Analytics">GitHub</a></span>
+        </p>
+        <ul>
+          <li>Projetei e desenvolvi uma pipeline de dados de ponta a ponta simulando o processamento analítico de uma plataforma de delivery.</li>
+          <li>Implementei ingestão de dados por meio de API REST utilizando Python e Requests, com processamento e persistência em PostgreSQL.</li>
+          <li>Estruturei o processamento em camadas da Arquitetura Medalhão: Bronze, que preserva a resposta bruta da API para auditoria, e Silver, que valida os registros e marca os inválidos sem descartá-los, com carga final em PostgreSQL.</li>
+          <li>Desenvolvi a orquestração da pipeline utilizando Apache Airflow e DAGs para automatização das etapas de processamento.</li>
+          <li>Desenvolvi consultas SQL e estruturas de dados para armazenamento e análise das informações processadas.</li>
+          <li>Containerizei os serviços utilizando Docker e Docker Compose, organizando o ambiente de desenvolvimento e os serviços necessários para execução da pipeline.</li>
+          <li>Apliquei princípios de separação de responsabilidades, modularização, versionamento com Git e boas práticas de Engenharia de Software.</li>
+          <li>Diagnostiquei e resolvi problemas relacionados a containers, volumes, permissões, configuração de ambiente e tipos de dados durante o processamento.</li>
+        </ul>
+        <p class="stack"><strong>Stack:</strong> Python, Pandas, Requests, PostgreSQL, SQL, Apache Airflow, Docker, Docker Compose, Git, GitHub, ETL, Data Pipeline</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Experiência Profissional</h2>
+
+      <div class="entry">
+        <p class="row"><strong>Propague Marketing</strong><span>Almenara, MG</span></p>
+        <p class="row"><span>Designer Gráfico</span><span>Abr 2025 – Presente</span></p>
+        <ul>
+          <li>Desenvolvo materiais visuais para redes sociais e comunicação institucional, trabalhando com diferentes demandas, identidades visuais e requisitos de clientes.</li>
+          <li>Organizo demandas, prioridades e entregas de múltiplos projetos simultaneamente, mantendo atenção a prazos, qualidade e requisitos definidos.</li>
+          <li>Atuo de forma colaborativa na interpretação de requisitos e resolução de problemas relacionados às demandas dos projetos.</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <p class="row"><strong>Info Projekt</strong><span>Almenara, MG</span></p>
+        <p class="row"><span>Representante de Suporte</span><span>Abr 2024 – Jan 2025</span></p>
+        <ul>
+          <li>Prestei atendimento ao cliente e suporte técnico para usuários de internet fibra óptica.</li>
+          <li>Realizei diagnóstico e troubleshooting de problemas de conectividade, identificando causas e aplicando soluções de acordo com cada cenário.</li>
+          <li>Registrei chamados técnicos e acompanhei ocorrências, desenvolvendo comunicação com clientes e capacidade de resolução de problemas.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Áreas de Interesse</h2>
+      <p>
+        Desenvolvimento Full Stack, Software Engineering, Desenvolvimento Web, Frontend, Backend, Node.js, React, APIs
+        REST, PostgreSQL, JavaScript, Engenharia de Software, Desenvolvimento de Sistemas, Automação, DevOps e Cloud.
+      </p>
+    </section>
+  </body>
+</html>

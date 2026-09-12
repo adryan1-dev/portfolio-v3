@@ -1,0 +1,58 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import { steps } from '../../data/content';
+---
+
+<section id="processo" class="section" aria-labelledby="processo-title">
+  <SectionHeader
+    id="processo-title"
+    title="Como funciona"
+    intro="Um processo simples, pensado para quem não precisa entender de tecnologia para ter um bom site."
+  />
+
+  <div class="container">
+    <ol class="steps" role="list">
+      {steps.map((step, i) => (
+        <li class="step">
+          <span class="step__number mono">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="step__title">{step.title}</h3>
+          <p class="step__text">{step.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .steps {
+    display: grid;
+    column-gap: var(--gutter);
+  }
+
+  .step {
+    padding-block: 1.25rem 2rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .step__number { color: var(--color-faint); }
+
+  .step__title {
+    margin-top: 0.75rem;
+    font-size: 1.375rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .step__text {
+    max-inline-size: 36ch;
+    margin-top: 0.5rem;
+    color: var(--color-muted);
+  }
+
+  @media (min-width: 768px) {
+    .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (min-width: 1024px) {
+    .steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+</style>

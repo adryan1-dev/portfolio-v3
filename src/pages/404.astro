@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+import { whatsappLink } from '../data/site';
+---
+
+<BaseLayout title="Página não encontrada | Adryan Chaves" description="A página que você procurou não existe ou mudou de endereço.">
+  <section class="container notfound" aria-labelledby="notfound-title">
+    <p class="notfound__code mono">Erro 404</p>
+    <h1 id="notfound-title" class="notfound__title">Esta página não existe.</h1>
+    <p class="notfound__text">
+      O endereço pode ter mudado ou sido digitado errado. Volte para o início ou fale comigo direto.
+    </p>
+    <div class="notfound__actions">
+      <Button href="/">Voltar para o início</Button>
+      <Button href={whatsappLink()} external variant="ghost">Falar no WhatsApp</Button>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 72vh;
+    padding-top: calc(var(--header-h) + 48px);
+    padding-bottom: 96px;
+  }
+
+  .notfound__code { color: var(--color-faint); }
+
+  .notfound__title {
+    margin-top: 1rem;
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+
+  .notfound__text {
+    max-inline-size: 44ch;
+    margin-top: 1.25rem;
+    font-size: var(--fs-lead);
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  .notfound__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+</style>

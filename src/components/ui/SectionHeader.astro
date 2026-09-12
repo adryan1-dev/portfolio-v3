@@ -1,0 +1,52 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  intro?: string;
+  size?: 'lg' | 'md';
+}
+
+const { id, title, intro, size = 'lg' } = Astro.props;
+---
+
+<div class:list={['container', 'section-header', `section-header--${size}`]}>
+  <h2 id={id} class="section-header__title">{title}</h2>
+  {intro && <p class="section-header__intro">{intro}</p>}
+</div>
+
+<style>
+  .section-header {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: clamp(32px, 5vw, 72px);
+  }
+
+  .section-header__title {
+    max-inline-size: 16ch;
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+  .section-header--md .section-header__title {
+    max-inline-size: 22ch;
+    font-size: clamp(1.75rem, 1.3rem + 1.8vw, 3rem);
+    letter-spacing: -0.03em;
+  }
+
+  .section-header__intro {
+    max-inline-size: 44ch;
+    font-size: 1.0625rem;
+    color: var(--color-muted);
+  }
+
+  @media (min-width: 1024px) {
+    .section-header {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--gutter);
+      align-items: end;
+    }
+    .section-header__title { grid-column: 1 / 8; }
+    .section-header__intro { grid-column: 8 / -1; }
+  }
+</style>

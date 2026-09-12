@@ -1,0 +1,257 @@
+---
+import type { SimpleIcon } from 'simple-icons';
+import {
+  siApacheairflow,
+  siCss,
+  siDjango,
+  siDocker,
+  siExpress,
+  siFigma,
+  siGit,
+  siGithubactions,
+  siHtml5,
+  siJavascript,
+  siNodedotjs,
+  siPandas,
+  siPostgresql,
+  siPython,
+  siReact,
+  siSupabase,
+  siTailwindcss,
+  siTypescript,
+  siVercel,
+  siVite,
+} from 'simple-icons';
+import { experience, languages, tools } from '../../data/content';
+import { site } from '../../data/site';
+
+const icons: Record<string, SimpleIcon> = {
+  JavaScript: siJavascript,
+  TypeScript: siTypescript,
+  React: siReact,
+  Vite: siVite,
+  HTML: siHtml5,
+  CSS: siCss,
+  'Tailwind CSS': siTailwindcss,
+  'Node.js': siNodedotjs,
+  Express: siExpress,
+  PostgreSQL: siPostgresql,
+  Supabase: siSupabase,
+  Python: siPython,
+  Django: siDjango,
+  Pandas: siPandas,
+  'Apache Airflow': siApacheairflow,
+  Git: siGit,
+  'GitHub Actions': siGithubactions,
+  Docker: siDocker,
+  Vercel: siVercel,
+  Figma: siFigma,
+};
+
+// Cor da marca no hover; marcas quase pretas (Express, Vercel, Django...) usam a cor do texto
+function hoverColor(hex: string) {
+  const [r, g, b] = [0, 2, 4].map((i) => {
+    const c = parseInt(hex.slice(i, i + 2), 16) / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return luminance < 0.06 ? 'var(--color-text)' : `#${hex}`;
+}
+
+const toolGroups = tools.map((group) => ({
+  label: group.label,
+  items: group.items.map((name) => {
+    const icon = icons[name];
+    if (!icon) throw new Error(`Ícone não mapeado para "${name}" em About.astro`);
+    return { name, path: icon.path, color: hoverColor(icon.hex) };
+  }),
+}));
+---
+
+<section id="sobre" class="section" aria-labelledby="sobre-title">
+  <div class="container about">
+    <h2 id="sobre-title" class="about__title">Design, código e visão de negócio.</h2>
+
+    <div class="about__text">
+      <p>
+        Sou designer gráfico e desenvolvedor full stack. Na Propague Marketing crio materiais para marcas
+        diferentes, com prazos e objetivos reais. No código, construo sites e aplicações do layout ao deploy.
+      </p>
+      <p>
+        Essa combinação evita dois problemas comuns: o site bonito que não traz contato e o sistema que funciona,
+        mas ninguém entende. Cada projeto começa pelo objetivo do negócio e termina publicado, rápido e fácil de
+        usar no celular.
+      </p>
+      <p>
+        Curso Análise e Desenvolvimento de Sistemas e trabalho com React, Node.js, PostgreSQL e Python em projetos
+        próprios e de clientes.
+      </p>
+    </div>
+
+    <div class="about__block about__block--experience">
+      <h3 class="about__label mono">Experiência e formação</h3>
+      <ol class="rows" role="list">
+        {experience.map((item) => (
+          <li class="row">
+            <span class="row__key mono">{item.period}</span>
+            <div>
+              <p class="row__role">{item.role}</p>
+              <p class="row__org">{item.org}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <a class="about__cv" href={site.cv} download="adryan-chaves-cv.pdf">
+        <span class="link">Baixar currículo completo (PDF)</span><span aria-hidden="true">↓</span>
+      </a>
+    </div>
+
+    <div class="about__block about__block--tools">
+      <h3 class="about__label mono">Ferramentas</h3>
+      <div class="tools">
+        {toolGroups.map((group) => (
+          <div class="tools__group">
+            <p class="tools__label mono">{group.label}</p>
+            <ul class="tools__grid" role="list">
+              {group.items.map((item) => (
+                <li class="tech" style={`--brand: ${item.color}`}>
+                  <svg class="tech__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d={item.path} />
+                  </svg>
+                  <span>{item.name}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <p class="tools__languages">
+        <span class="tools__label mono">Idiomas</span>
+        {languages.join(', ')}
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    display: grid;
+    row-gap: 2.5rem;
+    column-gap: var(--gutter);
+  }
+
+  .about__title {
+    max-inline-size: 12ch;
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+
+  .about__text {
+    display: grid;
+    gap: 1.25rem;
+    max-inline-size: 60ch;
+    color: var(--color-muted);
+  }
+  .about__text p:first-child {
+    font-size: var(--fs-lead);
+    line-height: 1.5;
+    color: var(--color-text);
+  }
+
+  .about__label {
+    margin-bottom: 1rem;
+    font-weight: 400;
+    color: var(--color-faint);
+  }
+
+  .rows { border-bottom: 1px solid var(--color-line); }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 9.75rem) minmax(0, 1fr);
+    gap: 1rem;
+    padding-block: 1rem;
+    border-top: 1px solid var(--color-line);
+  }
+  .row__key {
+    padding-top: 0.2rem;
+    white-space: nowrap;
+    color: var(--color-faint);
+  }
+  .row__role { font-weight: 600; }
+  .row__org {
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+  }
+
+  .about__cv {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    min-height: 44px;
+    margin-top: 0.75rem;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    transition: color var(--dur-fast);
+  }
+  .about__cv:hover { color: var(--color-text); }
+
+  /* Ferramentas: grade de ícones monocromáticos; a cor da marca aparece só no hover */
+  .tools {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .tools__label {
+    display: block;
+    margin-bottom: 0.625rem;
+    color: var(--color-faint);
+  }
+
+  .tools__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+    gap: 0.5rem;
+  }
+
+  .tech {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    min-height: 48px;
+    padding: 0.625rem 0.75rem;
+    border: 1px solid var(--color-line);
+    border-radius: 6px;
+    background-color: var(--color-bg-2);
+    font-size: 0.875rem;
+    line-height: 1.25;
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+  .tech__icon {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    color: var(--color-muted);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .tech:hover { border-color: var(--color-line-strong); }
+  .tech:hover .tech__icon { color: var(--brand); }
+
+  .tools__languages {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-line);
+    font-size: 0.9375rem;
+  }
+
+  @media (min-width: 1024px) {
+    .about { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+    .about__title { grid-column: 1 / 6; }
+    .about__text { grid-column: 7 / -1; }
+    .about__block { margin-top: clamp(32px, 4vw, 72px); }
+    .about__block--experience { grid-column: 1 / 6; }
+    .about__block--tools { grid-column: 7 / -1; }
+  }
+</style>

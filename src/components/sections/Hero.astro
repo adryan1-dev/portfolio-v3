@@ -1,0 +1,228 @@
+---
+import { Picture } from 'astro:assets';
+import Button from '../ui/Button.astro';
+import Status from '../ui/Status.astro';
+import { site, whatsappLink } from '../../data/site';
+
+import portrait from '../../assets/adryan.png';
+
+// Quebras de linha controladas: cada linha é um bloco, cada palavra sobe em sequência.
+let wordIndex = 0;
+const headlineLines = ['Sites à altura', 'da empresa que', 'você construiu.'].map((line) =>
+  line.split(' ').map((word) => ({ word, i: wordIndex++ })),
+);
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container hero__grid">
+    <p class="hero__kicker anim-fade">Adryan Chaves, designer e desenvolvedor full stack</p>
+
+    <h1 id="hero-title" class="hero__title">
+      {headlineLines.map((line) => (
+        <span class="hero__line">
+          {line.map(({ word, i }) => (
+            <Fragment>
+              <span class="w"><span style={`--i:${i}`}>{word}</span></span>{' '}
+            </Fragment>
+          ))}
+        </span>
+      ))}
+    </h1>
+
+    <div class="hero__body">
+      <p class="hero__lead anim-fade" style="--d:260ms">
+        Desenho e desenvolvo sites institucionais e landing pages para empresas que querem fortalecer a
+        presença online e transformar visitas em clientes.
+      </p>
+
+      <div class="hero__actions anim-fade" style="--d:320ms">
+        <Button href={whatsappLink()} external>Falar sobre um projeto</Button>
+        <Button href="#projetos" variant="ghost">Ver projetos</Button>
+        <Button href={site.cv} variant="light" download="adryan-chaves-cv.pdf">Baixar CV</Button>
+      </div>
+    </div>
+
+    <figure class="hero__portrait crop anim-fade" style="--d:160ms">
+      <div class="hero__portrait-frame">
+        <Picture
+          src={portrait}
+          formats={['avif']}
+          fallbackFormat="webp"
+          widths={[400, 640, 880, 1120]}
+          sizes="(min-width: 1680px) 520px, (min-width: 1024px) 30vw, (min-width: 768px) 36vw, 100vw"
+          alt="Adryan Chaves no seu espaço de trabalho, com monitores de código ao fundo"
+          loading="eager"
+        />
+      </div>
+    </figure>
+
+    <dl class="hero__spec anim-fade" style="--d:380ms">
+      <div>
+        <dt>Serviços</dt>
+        <dd>Sites institucionais, landing pages, redesign e aplicações web</dd>
+      </div>
+      <div>
+        <dt>Base</dt>
+        <dd>Almenara, MG. Atendo empresas de todo o Brasil.</dd>
+      </div>
+      <div>
+        <dt>Agenda</dt>
+        <dd><Status /></dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: calc(var(--header-h) + clamp(28px, 4vw, 56px));
+    padding-bottom: clamp(48px, 6vw, 96px);
+  }
+
+  .hero__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: var(--gutter);
+  }
+
+  .hero__kicker {
+    grid-column: 1 / -1;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-muted);
+    text-wrap: balance;
+  }
+
+  .hero__title {
+    grid-column: 1 / -1;
+    margin-top: 1.25rem;
+    font-size: var(--fs-display);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+  }
+
+  .hero__line { display: block; }
+
+  /* Palavras sobem por uma máscara; o padding evita cortar acentos e cedilha */
+  .w {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-block: 0.12em;
+    margin-block: -0.12em;
+  }
+  .w > span {
+    display: inline-block;
+    animation: rise 700ms var(--ease-out) both;
+    animation-delay: calc(var(--i) * 35ms + 60ms);
+  }
+
+  .hero__body {
+    grid-column: 1 / -1;
+    margin-top: 2rem;
+  }
+
+  .hero__lead {
+    max-inline-size: 36ch;
+    font-size: var(--fs-lead);
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  /* Mobile: WhatsApp em largura total; Ver projetos e Baixar CV lado a lado */
+  .hero__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+  .hero__actions > :global(:first-child) { grid-column: 1 / -1; }
+  .hero__actions :global(.btn) { padding-inline: 1rem; }
+
+  .hero__portrait {
+    grid-column: 1 / -1;
+    margin-top: 3rem;
+  }
+  .hero__portrait-frame {
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 6px;
+    background-color: var(--color-surface);
+  }
+  .hero__portrait-frame :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 28%;
+  }
+
+  .hero__spec {
+    grid-column: 1 / -1;
+    margin-top: 3rem;
+    border-top: 1px solid var(--color-line);
+  }
+  .hero__spec > div {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: 1rem;
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .hero__spec dt {
+    padding-top: 0.2rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-faint);
+  }
+  .hero__spec dd {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 768px) {
+    .hero__grid { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+    .hero__body { grid-column: 1 / 6; }
+    .hero__actions { display: flex; flex-wrap: wrap; }
+    .hero__actions :global(.btn) { padding-inline: 1.375rem; }
+
+    .hero__portrait {
+      grid-column: 6 / -1;
+      grid-row: 3;
+      align-self: start;
+      margin-top: 2rem;
+    }
+    .hero__portrait-frame { aspect-ratio: 4 / 5; }
+
+    .hero__spec {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: var(--gutter);
+      border-top: 0;
+    }
+    .hero__spec > div {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+      border-top: 1px solid var(--color-line);
+      border-bottom: 0;
+    }
+  }
+
+  /* Desktop: título, texto, botões e ficha técnica cabem na primeira dobra.
+     A foto atravessa as linhas da coluna esquerda sem empurrar a ficha para baixo. */
+  @media (min-width: 1024px) {
+    .hero__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+    .hero__title { grid-column: 1 / 9; grid-row: 2; margin-top: 1rem; }
+    .hero__body { grid-column: 1 / 8; grid-row: 3; margin-top: 1.5rem; }
+    .hero__lead { max-inline-size: 44ch; }
+    .hero__actions { margin-top: 1.75rem; }
+    .hero__portrait {
+      grid-column: 9 / -1;
+      grid-row: 2 / 5;
+      align-self: start;
+      margin-top: 1rem;
+    }
+    .hero__spec { grid-column: 1 / 9; grid-row: 4; margin-top: 2rem; }
+    .hero__spec > div { padding-block: 0.875rem; }
+  }
+</style>
