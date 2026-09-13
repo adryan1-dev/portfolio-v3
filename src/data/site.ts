@@ -2,7 +2,7 @@ export const site = {
   name: 'adryan1.dev',
   person: 'Adryan Chaves',
   role: 'Designer e desenvolvedor full stack',
-  url: 'https://adryan1-dev.vercel.app',
+  url: 'https://www.adryan1dev.com.br',
   lang: 'pt-BR',
   locale: 'pt_BR',
   title: 'Adryan Chaves — Criação de Sites e Desenvolvimento Full Stack',

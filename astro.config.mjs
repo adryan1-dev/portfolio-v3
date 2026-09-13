@@ -4,8 +4,8 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  // Troque aqui (e em src/data/site.ts e public/robots.txt) quando houver domínio próprio
-  site: 'https://adryan1-dev.vercel.app',
+  // Domínio próprio. Se mudar, troque também em src/data/site.ts, public/robots.txt e cv/curriculo.html
+  site: 'https://www.adryan1dev.com.br',
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],

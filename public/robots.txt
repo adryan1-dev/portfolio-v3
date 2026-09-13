@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://adryan1-dev.vercel.app/sitemap-index.xml
+Sitemap: https://www.adryan1dev.com.br/sitemap-index.xml

@@ -13,8 +13,9 @@ CHECKUP 2026-09-12 (17h):
 
 DEPLOY:
 - USER: publicar como vercel.app (sem domínio próprio por enquanto)
-- Produção: https://adryan1-dev.vercel.app (projeto Vercel adryan1-dev, escopo adryan1-dev1), deploy via `npx vercel@59.16.0 deploy --prod --yes` (build remoto)
-- site/canonical/sitemap/robots/JSON-LD usam https://adryan1-dev.vercel.app — trocar em astro.config.mjs, src/data/site.ts, public/robots.txt se houver domínio
+- Produção: https://www.adryan1dev.com.br (domínio próprio desde 2026-09-13; adryan1-dev.vercel.app continua respondendo). Projeto Vercel adryan1-dev, escopo adryan1-dev1, deploy automático no push do main
+- site/canonical/sitemap/robots/JSON-LD/og usam https://www.adryan1dev.com.br — definido em astro.config.mjs, src/data/site.ts, public/robots.txt e link do cv/curriculo.html
+- Domínio adryan1dev.com.br registrado em 2026-09-13 no Registro.br (DNS sec.dns.br, DNSSEC ativo). www = CNAME Vercel (OK, certificado emitido). Apex SEM registro A: Vercel pede `A adryan1dev.com.br 76.76.21.21` e o apex não está ligado ao projeto (só www)
 - .vercelignore exclui .env* (token OIDC do link), .vercel, .site-director, dist, node_modules
 - Verificado em produção: rotas 200, 404 real, CV PDF, OG, sitemap com 5 URLs
 - Portfólio antigo continua em adryan-chaves.vercel.app (não mexido)
@@ -172,7 +173,7 @@ IMPORTANT_CONSTRAINTS:
 NEXT_STEP: Decisões do usuário em PENDENTES (GitHub remoto, StickyCTA, analytics)
 
 BLOCKERS:
-- nenhum (domínio: decidido usar adryan1-dev.vercel.app; OG images produzidas)
+- nenhum (domínio próprio www.adryan1dev.com.br em uso; OG images produzidas)
 
 SPECIALIST_SKILLS_USED:
 - frontend-design, copywriting
