@@ -82,7 +82,7 @@ BUILT (case Márcia Chaves, 2026-09-13):
 - USER confirmou: AGUARDANDO APROVAÇÃO → status "Protótipo publicado"; primeiro do carrossel (PPG 2, ValeFiber 3, Lbook 4, DeliveryLens 5)
 - src/content/projects/marcia-chaves.md: só fatos verificados no site no ar e no repo local C:\dev\marcia-trg (site.config.js, main.css, main.js, home.js, README); tokens do selo TRG (#16305A, #3B8FD1, #F2F7FB; Hind Vadodara, Crimson Text, Hind Siliguri)
 - Capas via scripts/covers.mjs (fundo #3B8FD1, azul do selo); OG via scripts/og.mjs
-- Repo do site: https://github.com/adryan1-dev/marcia-trg (PRIVADO, branch master; .claude/ fora do git) → case sem "Ver código". Projeto Vercel marcia-trg NÃO está conectado ao GitHub (CLI da Vercel sem autorização neste PC)
+- Repo do site: https://github.com/adryan1-dev/marcia-trg (PRIVADO, branch master; .claude/ fora do git) → case sem "Ver código". Projeto Vercel marcia-trg conectado ao repo pelo usuário (2026-09-13)
 - Testado: 5 cards (1440/1366/390), percurso até 05/05, case 200, tokens/telas, próximo projeto, OG, JSON-LD, sitemap, overflow 0 nas 7 larguras
 
 PENDENTES COM O USUÁRIO:
