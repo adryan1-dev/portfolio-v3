@@ -15,7 +15,7 @@ DEPLOY:
 - USER: publicar como vercel.app (sem domínio próprio por enquanto)
 - Produção: https://www.adryan1dev.com.br (domínio próprio desde 2026-09-13; adryan1-dev.vercel.app continua respondendo). Projeto Vercel adryan1-dev, escopo adryan1-dev1, deploy automático no push do main
 - site/canonical/sitemap/robots/JSON-LD/og usam https://www.adryan1dev.com.br — definido em astro.config.mjs, src/data/site.ts, public/robots.txt e link do cv/curriculo.html
-- Domínio adryan1dev.com.br registrado em 2026-09-13 no Registro.br (DNS sec.dns.br, DNSSEC ativo). www = CNAME Vercel (OK, certificado emitido). Apex SEM registro A: Vercel pede `A adryan1dev.com.br 76.76.21.21` e o apex não está ligado ao projeto (só www)
+- Domínio adryan1dev.com.br registrado em 2026-09-13 no Registro.br (DNS sec.dns.br, DNSSEC ativo). www = CNAME Vercel (OK, certificado emitido). Apex configurado em 2026-09-13: dois registros A no Registro.br (216.198.79.1 e 64.29.17.1, recomendados pela Vercel) + domínio no projeto com redirect 308 para www; certificado próprio emitido; https://adryan1dev.com.br → 308 https://www.adryan1dev.com.br/
 - .vercelignore exclui .env* (token OIDC do link), .vercel, .site-director, dist, node_modules
 - Verificado em produção: rotas 200, 404 real, CV PDF, OG, sitemap com 5 URLs
 - Portfólio antigo continua em adryan-chaves.vercel.app (não mexido)
@@ -86,7 +86,7 @@ BUILT (case Márcia Chaves, 2026-09-13):
 - Repo do site: https://github.com/adryan1-dev/marcia-trg (PRIVADO, branch master; .claude/ fora do git) → case sem "Ver código". Projeto Vercel marcia-trg conectado ao repo pelo usuário (2026-09-13)
 - Testado: 5 cards (1440/1366/390), percurso até 05/05, case 200, tokens/telas, próximo projeto, OG, JSON-LD, sitemap, overflow 0 nas 7 larguras
 - 2026-09-13 tarde: site da Márcia mudou o hero (fundo marinho #16305A, título/botão brancos, foto nova, linha "Registro 17.181") → telas, capas e OG refeitas; alts da galeria e texto de direção visual atualizados. Tokens de cor/fonte conferidos no CSS publicado (sem mudança). "Registro 17.181" não entra no case (natureza do registro não verificada)
-- ATENÇÃO: essas mudanças do site da Márcia estavam só locais em C:\dev\marcia-trg (não commitadas; commit local 51914ce sem push). GitHub marcia-trg segue na versão antiga e a Vercel está ligada a ele: um deploy pelo git reverteria o hero
+- Repo marcia-trg sincronizado em 2026-09-13 (commits 51914ce + d65e44f no master; output/ com imagens de divulgação fica fora do git). Build local conferido idêntico ao publicado antes do push; deploy pelo git manteve o site igual
 
 PENDENTES COM O USUÁRIO:
 - Márcia: quando aprovar, trocar status do case (e decidir se o repo marcia-trg fica público para exibir "Ver código")
