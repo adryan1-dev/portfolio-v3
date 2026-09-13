@@ -10,6 +10,7 @@ const executablePath =
   process.env.CHROME_PATH ?? `${process.env.LOCALAPPDATA}/ms-playwright/chromium-1243/chrome-win64/chrome.exe`;
 
 const projects = [
+  { slug: 'marcia-chaves', url: 'https://marcia-trg.vercel.app/', background: '#3B8FD1' },
   { slug: 'ppg-marketing', url: 'https://adryan1-dev.github.io/ppg-site/', background: '#F2C200' },
   { slug: 'vale-fiber', url: 'https://vale-fiber.vercel.app/', background: '#D71F2B' },
   { slug: 'lbook', url: 'https://lbook-woad.vercel.app/', background: '#D9E1F2' },

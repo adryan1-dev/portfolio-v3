@@ -77,7 +77,16 @@ BUILT (cursor gruda nos botões, 2026-09-12 — commit 69fc3aa, publicado e test
 - Cursor nativo escondido em tudo (`cursor: none !important` em body *) enquanto o círculo está ativo; volta com <dialog> aberto
 - Loop segue rodando enquanto grudado (scroll e header em cápsula movem o alvo); scroll sem mover o mouse reavalia o elemento sob o ponteiro
 
+BUILT (case Márcia Chaves, 2026-09-13):
+- USER: adicionar https://marcia-trg.vercel.app/ — landing page de Márcia Chaves, terapeuta certificada em TRG, Almenara/MG
+- USER confirmou: AGUARDANDO APROVAÇÃO → status "Protótipo publicado"; primeiro do carrossel (PPG 2, ValeFiber 3, Lbook 4, DeliveryLens 5)
+- src/content/projects/marcia-chaves.md: só fatos verificados no site no ar e no repo local C:\dev\marcia-trg (site.config.js, main.css, main.js, home.js, README); tokens do selo TRG (#16305A, #3B8FD1, #F2F7FB; Hind Vadodara, Crimson Text, Hind Siliguri)
+- Capas via scripts/covers.mjs (fundo #3B8FD1, azul do selo); OG via scripts/og.mjs
+- Repo do site: https://github.com/adryan1-dev/marcia-trg (PRIVADO, branch master; .claude/ fora do git) → case sem "Ver código". Projeto Vercel marcia-trg NÃO está conectado ao GitHub (CLI da Vercel sem autorização neste PC)
+- Testado: 5 cards (1440/1366/390), percurso até 05/05, case 200, tokens/telas, próximo projeto, OG, JSON-LD, sitemap, overflow 0 nas 7 larguras
+
 PENDENTES COM O USUÁRIO:
+- Márcia: quando aprovar, trocar status do case (e decidir se o repo marcia-trg fica público para exibir "Ver código")
 - Analytics sem cookie (Vercel Analytics/Umami + eventos whatsapp_click, project_open, cv_download) não implementado
 - PPG: trocar status quando a Propague aprovar
 - Final QA restante: teclado/menu/carrossel em produção, revisão visual do CV em PDF

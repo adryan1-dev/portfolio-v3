@@ -1,6 +1,6 @@
 ---
 title: PPG Marketing
-order: 1
+order: 2
 category: Site institucional
 niche: Agência de marketing
 year: 2026

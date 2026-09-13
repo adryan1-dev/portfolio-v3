@@ -1,6 +1,6 @@
 ---
 title: ValeFiber
-order: 2
+order: 3
 category: Site institucional
 niche: Provedor de internet
 year: 2026
