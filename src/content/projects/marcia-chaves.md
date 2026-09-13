@@ -18,11 +18,11 @@ cover:
 gallery:
   - src: ../../assets/covers/source/marcia-chaves-desktop.png
     device: desktop
-    alt: "Primeira dobra da landing page no desktop: título Um espaço seguro para compreender suas emoções e cuidar de você, botão Conversar com Márcia, foto da terapeuta com o selo TRG e faixa de credenciais."
+    alt: "Primeira dobra da landing page no desktop: hero em fundo marinho com o título Um espaço seguro para compreender suas emoções e cuidar de você em branco, botões Conversar com Márcia e Conhecer o atendimento, e foto da terapeuta com o selo TRG."
     caption: Primeira dobra no desktop
   - src: ../../assets/covers/source/marcia-chaves-mobile.png
     device: mobile
-    alt: "Landing page no celular: título, texto de apoio, botões Conversar com Márcia e Conhecer o atendimento, e atendimento online e presencial em Almenara/MG."
+    alt: "Landing page no celular: hero em fundo marinho com título em branco, texto de apoio, botões Conversar com Márcia e Conhecer o atendimento, e atendimento online e presencial em Almenara/MG."
     caption: Primeira dobra no celular
 case:
   lede: Uma landing page que apresenta o acompanhamento terapêutico com acolhimento e leva a primeira conversa para o WhatsApp.
@@ -33,10 +33,10 @@ case:
   strategy: A página começa pelo acolhimento e pelas credenciais, ajuda a pessoa a se reconhecer em situações comuns, explica as abordagens e como funciona o atendimento, responde dúvidas e termina em uma chamada para o WhatsApp.
   direction:
     title: Direção visual
-    body: A paleta sai do selo TRG. Marinho e azul conduzem títulos e botões, os fundos são claros e as outras cores do selo marcam os ícones das credenciais. Palavras grandes e esmaecidas ao fundo, como Mente, Escuta e Emoções, dão ritmo às seções.
+    body: A paleta sai do selo TRG. O hero abre em marinho, com título e botão principal em branco. Nas seções seguintes os fundos ficam claros, o marinho e o azul conduzem títulos e botões, e as outras cores do selo marcam os ícones das credenciais. Palavras grandes e esmaecidas ao fundo, como Mente, Escuta e Emoções, dão ritmo às seções.
     tokens:
       - label: Marinho
-        value: "#16305A, títulos e botões"
+        value: "#16305A, fundo do hero, títulos e botões"
         color: "#16305A"
       - label: Azul do selo
         value: "#3B8FD1, acento principal"

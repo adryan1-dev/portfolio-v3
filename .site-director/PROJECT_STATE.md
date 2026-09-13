@@ -85,6 +85,8 @@ BUILT (case Márcia Chaves, 2026-09-13):
 - Capas via scripts/covers.mjs (fundo #3B8FD1, azul do selo); OG via scripts/og.mjs
 - Repo do site: https://github.com/adryan1-dev/marcia-trg (PRIVADO, branch master; .claude/ fora do git) → case sem "Ver código". Projeto Vercel marcia-trg conectado ao repo pelo usuário (2026-09-13)
 - Testado: 5 cards (1440/1366/390), percurso até 05/05, case 200, tokens/telas, próximo projeto, OG, JSON-LD, sitemap, overflow 0 nas 7 larguras
+- 2026-09-13 tarde: site da Márcia mudou o hero (fundo marinho #16305A, título/botão brancos, foto nova, linha "Registro 17.181") → telas, capas e OG refeitas; alts da galeria e texto de direção visual atualizados. Tokens de cor/fonte conferidos no CSS publicado (sem mudança). "Registro 17.181" não entra no case (natureza do registro não verificada)
+- ATENÇÃO: essas mudanças do site da Márcia estavam só locais em C:\dev\marcia-trg (não commitadas; commit local 51914ce sem push). GitHub marcia-trg segue na versão antiga e a Vercel está ligada a ele: um deploy pelo git reverteria o hero
 
 PENDENTES COM O USUÁRIO:
 - Márcia: quando aprovar, trocar status do case (e decidir se o repo marcia-trg fica público para exibir "Ver código")
