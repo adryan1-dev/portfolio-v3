@@ -88,7 +88,17 @@ BUILT (case Márcia Chaves, 2026-09-13):
 - 2026-09-13 tarde: site da Márcia mudou o hero (fundo marinho #16305A, título/botão brancos, foto nova, linha "Registro 17.181") → telas, capas e OG refeitas; alts da galeria e texto de direção visual atualizados. Tokens de cor/fonte conferidos no CSS publicado (sem mudança). "Registro 17.181" não entra no case (natureza do registro não verificada)
 - Repo marcia-trg sincronizado em 2026-09-13 (commits 51914ce + d65e44f no master; output/ com imagens de divulgação fica fora do git). Build local conferido idêntico ao publicado antes do push; deploy pelo git manteve o site igual
 
+BUILT (cases Team Mielle e Marina Avelar, 2026-09-13):
+- USER: adicionar github.com/adryan1-dev/lp-mielle e github.com/adryan1-dev/site-nutri
+- Team Mielle (lp-mielle.vercel.app, personal trainer Stéfane Mielle): USER confirmou AGUARDANDO APROVAÇÃO → "Protótipo publicado", ordem 2. Repo PRIVADO → sem "Ver código". Fatos de PRODUCT.md, DESIGN.md, spec e site no ar. Cena do treino presencial é imagem de IA; bancos de imagem nunca como alunas
+- Marina Avelar (site-nutri, nutricionista FICTÍCIA): novo status "Projeto conceitual" no enum da collection (USER), ordem 5. Repo público → "Ver código"
+- Site-nutri só estava em crisnutricaoesportiva.vercel.app (projeto Vercel "dist", deploy local de C:\dev\dra-cris\site-nutri e C:\dev\cristhiane-chaves-site\dist). USER escolheu endereço neutro: marina-nutri.vercel.app adicionado ao projeto; o domínio antigo continua ativo
+- Site-nutri: canonical, og:image e sitemap apontam para exemplo-nutri-portfolio.invalid (não corrigido, repo do usuário)
+- Nova ordem: Márcia 1, Team Mielle 2, PPG 3, ValeFiber 4, Marina Avelar 5, Lbook 6, DeliveryLens 7
+- Capas (fundos #22C55E e #6F7955) via scripts/covers.mjs; OG via scripts/og.mjs; check e build limpos; sitemap com 8 URLs
+
 PENDENTES COM O USUÁRIO:
+- Team Mielle: quando a Stéfane aprovar, trocar status
 - Márcia: quando aprovar, trocar status do case (e decidir se o repo marcia-trg fica público para exibir "Ver código")
 - Analytics sem cookie (Vercel Analytics/Umami + eventos whatsapp_click, project_open, cv_download) não implementado
 - PPG: trocar status quando a Propague aprovar

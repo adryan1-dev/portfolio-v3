@@ -19,7 +19,7 @@ const projects = defineCollection({
       niche: z.string(),
       year: z.number(),
       /** Honestidade: nenhum preview é apresentado como cliente com resultado */
-      status: z.enum(['Protótipo publicado', 'Projeto autoral', 'Projeto técnico']),
+      status: z.enum(['Protótipo publicado', 'Projeto conceitual', 'Projeto autoral', 'Projeto técnico']),
       summary: z.string().max(160),
       seoDescription: z.string().max(170),
       stack: z.array(z.string()),

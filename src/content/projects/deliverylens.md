@@ -1,6 +1,6 @@
 ---
 title: DeliveryLens Analytics
-order: 5
+order: 7
 category: Engenharia de dados
 niche: Delivery
 year: 2026
