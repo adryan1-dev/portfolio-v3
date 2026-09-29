@@ -13,8 +13,9 @@ const projects = [
   { slug: 'marcia-chaves', url: 'https://marcia-trg.vercel.app/', background: '#3B8FD1' },
   { slug: 'team-mielle', url: 'https://lp-mielle.vercel.app/', background: '#22C55E' },
   { slug: 'ppg-marketing', url: 'https://adryan1-dev.github.io/ppg-site/', background: '#F2C200' },
-  { slug: 'vale-fiber', url: 'https://vale-fiber.vercel.app/', background: '#D71F2B' },
+  { slug: 'info-projekt', url: 'https://info-projekt.vercel.app/', background: '#D3141D' },
   { slug: 'marina-avelar', url: 'https://marina-nutri.vercel.app/', background: '#6F7955' },
+  { slug: 'lia-valenca', url: 'https://lia-valenca-portfolio.vercel.app/', background: '#4C1D7A' },
   { slug: 'lbook', url: 'https://lbook-woad.vercel.app/', background: '#D9E1F2' },
   { slug: 'deliverylens', diagram: true, background: '#0D0F12' },
 ];

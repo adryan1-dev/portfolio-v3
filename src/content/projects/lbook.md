@@ -1,6 +1,6 @@
 ---
 title: Lbook
-order: 6
+order: 7
 category: Aplicação full stack
 niche: Gestão de leituras
 year: 2026
