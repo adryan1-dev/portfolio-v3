@@ -1,6 +1,7 @@
 ---
 import { getImage } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import { solutionLabels } from '../../data/content';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -8,7 +9,7 @@ interface Props {
 }
 
 const { project, index } = Astro.props;
-const { title, category, niche, year, status, summary, stack, cover } = project.data;
+const { title, category, niche, solution, year, status, summary, stack, cover } = project.data;
 
 const [wideAvif, wideWebp, tallAvif, tallWebp] = await Promise.all([
   getImage({ src: cover.wide, widths: [600, 900, 1200], format: 'avif' }),
@@ -52,7 +53,7 @@ const number = String(index + 1).padStart(2, '0');
 
       <h3 class="card__title">{title}</h3>
       <p class="card__facts mono">
-        <span>{category} / {niche}</span>
+        <span>{solutionLabels[solution]} · {category} / {niche}</span>
         <span>{year}</span>
       </p>
 

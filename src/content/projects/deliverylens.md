@@ -1,8 +1,9 @@
 ---
 title: DeliveryLens Analytics
-order: 8
+order: 7
 category: Engenharia de dados
 niche: Delivery
+solution: automacao
 year: 2026
 status: Projeto técnico
 summary: Pipeline que leva dados de uma API REST pelas camadas bronze e silver até o PostgreSQL, com orquestração no Airflow e serviços em Docker.

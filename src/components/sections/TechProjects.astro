@@ -1,29 +1,62 @@
 ---
 import SectionHeader from '../ui/SectionHeader.astro';
+import { getCollection } from 'astro:content';
 import { techProjects } from '../../data/content';
 import { contact } from '../../data/site';
+
+// Projetos de automação e sistemas têm case próprio; os demais apontam para o repositório
+const cases = (await getCollection('projects'))
+  .filter((project) => project.data.solution !== 'site')
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((project) => ({
+    name: project.data.title,
+    year: project.data.year,
+    summary: project.data.summary,
+    stack: project.data.stack,
+    href: `/projetos/${project.id}/`,
+    cta: 'Ver case',
+    external: false,
+  }));
+const items = [
+  ...cases,
+  ...techProjects.map((project) => ({
+    name: project.name,
+    year: project.year,
+    summary: project.summary,
+    stack: project.stack,
+    href: project.repo,
+    cta: 'Ver código',
+    external: true,
+  })),
+];
 ---
 
 <section class="section" aria-labelledby="lab-title">
   <SectionHeader
     id="lab-title"
     size="md"
-    title="Outros projetos técnicos"
-    intro="Automação, dados e back-end: ferramentas e estudos publicados no GitHub."
+    title="Projetos técnicos"
+    intro="Automação, dados, back-end e aplicações completas, com código publicado no GitHub."
   />
 
   <div class="container">
     <ul class="lab" role="list">
-      {techProjects.map((project) => (
+      {items.map((project) => (
         <li data-reveal-group data-reveal>
-          <a class="lab__row" data-reveal-rule href={project.repo} target="_blank" rel="noopener noreferrer">
+          <a
+            class="lab__row"
+            data-reveal-rule
+            href={project.href}
+            target={project.external ? '_blank' : undefined}
+            rel={project.external ? 'noopener noreferrer' : undefined}
+          >
             <div class="lab__head">
               <h3 class="lab__name"><span class="link">{project.name}</span></h3>
               <span class="lab__year mono">{project.year}</span>
             </div>
             <p class="lab__text">{project.summary}</p>
             <p class="lab__stack mono">{project.stack.join(' / ')}</p>
-            <span class="lab__cta">Ver código<span class="lab__arrow" aria-hidden="true">↗</span></span>
+            <span class="lab__cta">{project.cta}<span class="lab__arrow" aria-hidden="true">{project.external ? '↗' : '→'}</span></span>
           </a>
         </li>
       ))}

@@ -17,7 +17,8 @@ const projects = [
   { slug: 'marina-avelar', url: 'https://marina-nutri.vercel.app/', background: '#6F7955' },
   { slug: 'lia-valenca', url: 'https://lia-valenca-portfolio.vercel.app/', background: '#4C1D7A' },
   { slug: 'lbook', url: 'https://lbook-woad.vercel.app/', background: '#D9E1F2' },
-  { slug: 'deliverylens', diagram: true, background: '#0D0F12' },
+  { slug: 'deliverylens', diagram: 'deliverylens', background: '#0D0F12' },
+  { slug: 'flowsheet', diagram: 'flowsheet', background: '#0D0F12' },
 ];
 
 const [mode, ...only] = process.argv.slice(2);
@@ -110,6 +111,37 @@ function diagram({ background, orientation }) {
   <div class="flow">${api}<div class="line"></div><div class="group"><small>Apache Airflow · DAG</small>${bronze}<div class="line"></div>${silver}</div><div class="line line--out"></div>${pg}</div>`;
 }
 
+// FlowSheet também não tem versão publicada: a capa mostra o fluxo descrito no README do repositório.
+const flowStages = [
+  { name: 'Planilha Excel', note: 'importação de .xlsx' },
+  { name: 'Registros', note: 'revisão e edição' },
+  { name: 'Playwright', note: 'preenche formulários', output: true },
+  { name: 'Resultados', note: 'status por linha' },
+];
+
+function flowDiagram({ background, orientation }) {
+  const wide = orientation === 'wide';
+  const nodes = flowStages.map(node);
+  const line = '<div class="line"></div>';
+  return `${fontLinks}<style>${reset}
+    body{width:${wide ? 2400 : 1200}px;height:1500px;background:${background};color:#f5f5f5;font-family:'Geist Mono',monospace}
+    .grid{position:absolute;inset:0;background-image:linear-gradient(rgb(255 255 255/.035) 1px,transparent 1px),linear-gradient(90deg,rgb(255 255 255/.035) 1px,transparent 1px);background-size:80px 80px}
+    .title{position:absolute;left:110px;top:${wide ? 90 : 120}px;font-size:${wide ? 38 : 26}px;color:#7c8390}
+    .compose{position:absolute;border:2px dashed rgb(255 255 255/.16);border-radius:28px;${wide ? 'left:90px;right:90px;top:230px;bottom:150px' : 'left:110px;right:110px;top:220px;bottom:130px'}}
+    .compose>small{position:absolute;top:-19px;left:40px;padding:0 16px;background:${background};font-size:${wide ? 30 : 24}px;color:#7c8390}
+    .flow{position:absolute;display:flex;align-items:center;${wide ? 'left:150px;right:150px;top:50%;transform:translateY(-50%)' : 'flex-direction:column;left:0;right:0;top:330px'}}
+    .node{flex:none;${wide ? 'min-width:340px' : 'width:560px'};padding:${wide ? '48px 38px' : '26px 32px'};border:${wide ? 3 : 2}px solid rgb(255 255 255/.16);border-radius:18px;background:#111318;white-space:nowrap}
+    .node--out{border-color:#2f5bff}
+    .node b{display:flex;align-items:center;gap:16px;font-family:Manrope,sans-serif;font-weight:700;font-size:${wide ? 60 : 38}px;letter-spacing:-.02em}
+    .node span{display:block;margin-top:14px;font-size:${wide ? 30 : 22}px;color:#9299a5}
+    .line{flex:1;${wide ? 'height:3px;min-width:40px' : 'width:2px;height:44px;flex:none'};background:rgb(255 255 255/.28)}
+  </style>
+  <div class="grid"></div>
+  <p class="title">flow-sheet / automação</p>
+  <div class="compose"><small>django</small></div>
+  <div class="flow">${nodes.join(line)}</div>`;
+}
+
 async function render(html, width, height, path) {
   const page = await browser.newPage({ viewport: { width, height } });
   await page.setContent(html, { waitUntil: 'networkidle' });
@@ -123,8 +155,9 @@ async function compose(project) {
   const wide = `${OUT}/${project.slug}-wide.png`;
   const tall = `${OUT}/${project.slug}-tall.png`;
   if (project.diagram) {
-    await render(diagram({ background: project.background, orientation: 'wide' }), 2400, 1500, wide);
-    await render(diagram({ background: project.background, orientation: 'tall' }), 1200, 1500, tall);
+    const draw = project.diagram === 'flowsheet' ? flowDiagram : diagram;
+    await render(draw({ background: project.background, orientation: 'wide' }), 2400, 1500, wide);
+    await render(draw({ background: project.background, orientation: 'tall' }), 1200, 1500, tall);
     return;
   }
   const url = new URL(project.url);

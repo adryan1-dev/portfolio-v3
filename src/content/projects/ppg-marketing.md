@@ -3,6 +3,7 @@ title: PPG Marketing
 order: 3
 category: Site institucional
 niche: Agência de marketing
+solution: site
 year: 2026
 status: Protótipo publicado
 summary: Site de uma página para uma agência de social media e tráfego pago, feito para explicar o serviço em poucos segundos e levar a conversa ao WhatsApp.

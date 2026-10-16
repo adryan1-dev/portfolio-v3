@@ -61,8 +61,8 @@ function homeHtml(photo) {
     .photo img{object-position:50% 28%}
   </style>
   <p class="wordmark">adryan1.dev</p>
-  <h1><span>Sites à altura</span><span>da empresa que</span><span>você construiu.</span></h1>
-  <p class="role">Adryan Chaves, designer e desenvolvedor full stack</p>
+  <h1><span>Tecnologia que</span><span>trabalha pelo</span><span>seu negócio.</span></h1>
+  <p class="role">Adryan Chaves, desenvolvedor de soluções digitais</p>
   <p class="status"><span class="dot"></span>Disponível para novos projetos</p>
   <div class="crop photo"><div class="frame"><img src="${photo}"></div></div>`;
 }

@@ -17,6 +17,8 @@ const projects = defineCollection({
       category: z.string(),
       /** Segmento do cliente ou do produto, ex.: "Provedor de internet" */
       niche: z.string(),
+      /** Frente de trabalho que o projeto demonstra */
+      solution: z.enum(['site', 'automacao', 'sistema']),
       year: z.number(),
       /** Honestidade: nenhum preview é apresentado como cliente com resultado */
       status: z.enum(['Protótipo publicado', 'Projeto conceitual', 'Projeto autoral', 'Projeto técnico']),
@@ -51,6 +53,10 @@ const projects = defineCollection({
         }),
         implementation: z.object({ body: z.string(), points: z.array(z.string()) }),
         quality: block.optional(),
+        /** Benefícios potenciais, descritos como possibilidade e sem números */
+        benefits: z.array(z.string()).default([]),
+        /** Tarefas ou cenários em que a mesma abordagem pode ser aplicada */
+        applications: z.array(z.string()).default([]),
         limitations: z.array(z.string()),
       }),
     }),

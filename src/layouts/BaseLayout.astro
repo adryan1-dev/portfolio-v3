@@ -3,8 +3,8 @@ import { Font } from 'astro:assets';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import StickyCta from '../components/layout/StickyCta.astro';
-import InvertedCursor from '../components/ui/InvertedCursor.astro';
 import { contact, site } from '../data/site';
+import { services } from '../data/content';
 import '../styles/global.css';
 
 interface Props {
@@ -22,7 +22,7 @@ const {
   description = site.description,
   schema = [],
   image = '/og/home.jpg',
-  imageAlt = 'Adryan Chaves ao lado do título Sites à altura da empresa que você construiu.',
+  imageAlt = 'Adryan Chaves ao lado do título Tecnologia que trabalha pelo seu negócio.',
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
 const imageUrl = new URL(image, Astro.site ?? site.url).href;
@@ -45,17 +45,41 @@ const jsonLd = {
         addressCountry: site.location.country,
       },
       alumniOf: { '@type': 'CollegeOrUniversity', name: 'Faculdade Descomplica' },
-      knowsAbout: ['Criação de sites', 'Landing pages', 'React', 'Node.js', 'PostgreSQL', 'Python'],
+      knowsAbout: [
+        'Criação de sites',
+        'Landing pages',
+        'Automação de processos',
+        'Sistemas web',
+        'React',
+        'Node.js',
+        'PostgreSQL',
+        'Python',
+      ],
     },
     {
       '@type': 'ProfessionalService',
       '@id': `${site.url}/#service`,
-      name: `${site.person} — Criação de sites`,
+      name: `${site.person} — Sites, sistemas e automações`,
       url: site.url,
       founder: { '@id': `${site.url}/#person` },
       telephone: `+${contact.whatsapp}`,
       areaServed: ['Almenara', 'Vale do Jequitinhonha', 'Minas Gerais', 'Brasil'],
-      serviceType: ['Site institucional', 'Landing page', 'Redesign de site', 'Desenvolvimento web'],
+      serviceType: [
+        'Site institucional',
+        'Landing page',
+        'Redesign de site',
+        'Automação de processos',
+        'Integração entre sistemas',
+        'Sistema web sob medida',
+      ],
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Soluções digitais',
+        itemListElement: services.map((service) => ({
+          '@type': 'Offer',
+          itemOffered: { '@type': 'Service', name: service.title, description: service.description },
+        })),
+      },
     },
     {
       '@type': 'WebSite',
@@ -99,6 +123,8 @@ const jsonLd = {
 
     <Font cssVariable="--font-manrope" preload />
     <Font cssVariable="--font-geist-mono" />
+    <!-- Cursor: Luffy - One Piece (cursors-4u.com), servido localmente -->
+    <link rel="stylesheet" href="/cursor/luffy-one-piece.css" />
 
     <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
   </head>
@@ -110,7 +136,6 @@ const jsonLd = {
     </main>
     <Footer />
     <StickyCta />
-    <InvertedCursor />
 
     <script>
       import { initReveal } from '../scripts/reveal';

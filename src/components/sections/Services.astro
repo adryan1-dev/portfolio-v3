@@ -7,14 +7,14 @@ import { whatsappLink } from '../../data/site';
 <section id="servicos" class="section" aria-labelledby="servicos-title">
   <SectionHeader
     id="servicos-title"
-    title="O que posso construir"
-    intro="Do primeiro site da empresa à reformulação de um site que já não representa o negócio. Veja qual formato combina com você."
+    title="Como posso ajudar"
+    intro="Três frentes para o mesmo objetivo: fazer a tecnologia trabalhar pelo seu negócio. Veja qual combina com o seu momento."
   />
 
   <div class="container">
     <ul class="services" role="list">
       {services.map((service) => (
-        <li class="service" data-reveal-group data-reveal-rule>
+        <li class="service" id={service.id} data-reveal-group data-reveal-rule>
           {/* Quem: nome do serviço e para quem ele é */}
           <div class="service__who" data-reveal>
             <h3 class="service__title">{service.title}</h3>
@@ -30,6 +30,10 @@ import { whatsappLink } from '../../data/site';
             <ul class="service__includes" role="list" aria-label={`O que inclui: ${service.title}`}>
               {service.includes.map((item) => <li class="mono">{item}</li>)}
             </ul>
+            <p class="service__examples">
+              <span class="service__label mono">Exemplos de aplicação</span>
+              {service.examples}
+            </p>
           </div>
 
           <a
@@ -40,19 +44,19 @@ import { whatsappLink } from '../../data/site';
             href={whatsappLink(service.message)}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`Pedir orçamento de ${service.title.toLowerCase()} pelo WhatsApp`}
+            aria-label={`${service.cta} pelo WhatsApp`}
           >
-            <span class="link">Pedir orçamento</span><span class="service__arrow" aria-hidden="true">↗</span>
+            <span class="link">{service.cta}</span><span class="service__arrow" aria-hidden="true">↗</span>
           </a>
         </li>
       ))}
     </ul>
 
     <p class="services__note" data-reveal-group data-reveal>
-      <span class="services__note-label mono">Incluso</span>
+      <span class="services__note-label mono">Na proposta</span>
       <span>
-        Sites institucionais, landing pages e redesigns incluem domínio, hospedagem e 3 meses de manutenção para
-        pequenas alterações ou correções.
+        Cada proposta detalha o que está incluso (publicação, domínio, hospedagem, suporte) e quais custos de
+        terceiros existem, como ferramentas de automação e serviços de IA.
       </span>
     </p>
   </div>
@@ -111,6 +115,13 @@ import { whatsappLink } from '../../data/site';
     color: var(--color-muted);
   }
 
+  .service__examples {
+    max-inline-size: 48ch;
+    margin-top: 1.25rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
   .service__includes {
     display: flex;
     flex-wrap: wrap;
@@ -152,8 +163,8 @@ import { whatsappLink } from '../../data/site';
 
   @media (min-width: 1024px) {
     .service { grid-template-columns: repeat(12, minmax(0, 1fr)); }
-    .service__who { grid-column: 1 / 5; grid-row: 1; }
-    .service__what { grid-column: 5 / 10; grid-row: 1; }
-    .service__cta { grid-column: 10 / -1; grid-row: 1; justify-self: end; }
+    .service__who { grid-column: 1 / 6; grid-row: 1; }
+    .service__what { grid-column: 6 / 10; grid-row: 1; }
+    .service__cta { grid-column: 10 / -1; grid-row: 1; justify-self: end; white-space: nowrap; }
   }
 </style>

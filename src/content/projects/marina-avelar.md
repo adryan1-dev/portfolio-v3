@@ -1,8 +1,9 @@
 ---
 title: Marina Avelar
-order: 5
+order: 8
 category: Landing page
 niche: Nutrição
+solution: site
 year: 2026
 status: Projeto conceitual
 summary: Estudo de site para uma nutricionista fictícia, feito para testar linguagem, estrutura e direção de arte de uma presença digital na área da saúde.

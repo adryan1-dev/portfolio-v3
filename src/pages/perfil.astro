@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+import RiseText from '../components/ui/RiseText.astro';
+import About from '../components/sections/About.astro';
+import TechProjects from '../components/sections/TechProjects.astro';
+import FinalCta from '../components/sections/FinalCta.astro';
+import { contact, site } from '../data/site';
+
+const title = 'Perfil profissional | Adryan Chaves';
+const description =
+  'Experiência, formação, stack técnica, projetos e currículo de Adryan Chaves, desenvolvedor full stack em Almenara (MG).';
+
+const schema = [
+  {
+    '@type': 'ProfilePage',
+    '@id': `${site.url}/perfil/#page`,
+    url: `${site.url}/perfil/`,
+    name: title,
+    inLanguage: site.lang,
+    mainEntity: { '@id': `${site.url}/#person` },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Início', item: `${site.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Perfil profissional', item: `${site.url}/perfil/` },
+    ],
+  },
+];
+
+const links = [
+  { label: 'GitHub', href: contact.github },
+  { label: 'LinkedIn', href: contact.linkedin },
+  { label: 'E-mail', href: `mailto:${contact.email}` },
+];
+---
+
+<BaseLayout title={title} description={description} schema={schema}>
+  <header class="container profile" data-sticky-cta-after>
+    <a class="profile__back mono anim-fade" href="/" data-cursor-attach><span aria-hidden="true">←</span> Início</a>
+    <p class="profile__kicker mono anim-fade" style="--d:60ms">Para recrutadores e parceiros</p>
+    <h1 class="profile__title"><RiseText text="Perfil profissional" load /></h1>
+    <p class="profile__lead anim-fade" style="--d:260ms">
+      Experiência, formação, ferramentas e projetos técnicos. Se você quer contratar um projeto para a sua empresa,
+      comece pela <a href="/#servicos" data-cursor-attach>página inicial</a>.
+    </p>
+    <div class="profile__actions anim-fade" style="--d:320ms">
+      <Button href={site.cv} download="adryan-chaves-cv.pdf">Baixar currículo (PDF)</Button>
+      {links.map((link) => (
+        <Button
+          href={link.href}
+          variant="ghost"
+          external={link.href.startsWith('http')}
+        >
+          {link.label}
+        </Button>
+      ))}
+    </div>
+  </header>
+
+  <About />
+  <TechProjects />
+  <FinalCta />
+</BaseLayout>
+
+<style>
+  .profile {
+    padding-top: calc(var(--header-h) + clamp(24px, 4vw, 56px));
+    padding-bottom: clamp(24px, 4vw, 56px);
+  }
+
+  .profile__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    color: var(--color-muted);
+    transition: color var(--dur-fast);
+  }
+  .profile__back:hover { color: var(--color-text); }
+
+  .profile__kicker {
+    margin-top: 2rem;
+    color: var(--color-faint);
+  }
+
+  .profile__title {
+    margin-top: 0.75rem;
+    font-size: var(--fs-display);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+  }
+
+  .profile__lead {
+    max-inline-size: 46ch;
+    margin-top: 1.5rem;
+    font-size: var(--fs-lead);
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+  .profile__lead a {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-decoration-color: var(--color-line-strong);
+    text-underline-offset: 4px;
+  }
+
+  .profile__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+</style>

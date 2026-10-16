@@ -1,0 +1,74 @@
+---
+import RiseText from '../ui/RiseText.astro';
+import { site } from '../../data/site';
+---
+
+<section id="sobre" class="section" aria-labelledby="sobre-title">
+  <div class="container about">
+    <h2 id="sobre-title" class="about__title" data-reveal-group><RiseText text="Design, código e visão de negócio." /></h2>
+
+    <div class="about__text" data-reveal-group>
+      <p data-reveal>
+        Sou desenvolvedor independente, formado em Análise e Desenvolvimento de Sistemas e com experiência em design
+        gráfico. Você fala direto comigo, do primeiro contato à entrega.
+      </p>
+      <p data-reveal style="--i:1">
+        Cada projeto começa pelo problema do negócio, não pela tecnologia. Trabalho com React, Node.js,
+        PostgreSQL e Python em projetos próprios e de clientes.
+      </p>
+
+      <p class="about__links" data-reveal style="--i:2">
+        <a href="/perfil" data-cursor-attach><span class="link">Ver perfil profissional</span><span aria-hidden="true">→</span></a>
+        <a href={site.cv} download="adryan-chaves-cv.pdf" data-cursor-attach><span class="link">Baixar currículo (PDF)</span><span aria-hidden="true">↓</span></a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    display: grid;
+    row-gap: 2.5rem;
+    column-gap: var(--gutter);
+  }
+
+  .about__title {
+    max-inline-size: 12ch;
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+
+  .about__text {
+    display: grid;
+    gap: 1.25rem;
+    max-inline-size: 60ch;
+    color: var(--color-muted);
+  }
+  .about__text p:first-child {
+    font-size: var(--fs-lead);
+    line-height: 1.5;
+    color: var(--color-text);
+  }
+
+  .about__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+  }
+  .about__links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    min-height: 44px;
+    font-size: 0.9375rem;
+    color: var(--color-text);
+  }
+
+  @media (min-width: 1024px) {
+    .about { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+    .about__title { grid-column: 1 / 6; }
+    .about__text { grid-column: 7 / -1; }
+  }
+</style>

@@ -1,8 +1,9 @@
 ---
 title: Team Mielle
-order: 2
+order: 6
 category: Landing page
 niche: Personal trainer
+solution: site
 year: 2026
 status: Protótipo publicado
 summary: Landing page de uma personal trainer com atendimento presencial e online, feita para mostrar o método e levar a primeira conversa ao WhatsApp.

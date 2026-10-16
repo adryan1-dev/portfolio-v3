@@ -208,6 +208,28 @@ const facts = [
       </section>
     )}
 
+    {details.benefits.length > 0 && (
+      <section class="container case__block" aria-labelledby="beneficios" data-reveal-group data-reveal-rule>
+        <h2 id="beneficios" class="case__heading"><RiseText text="Benefícios potenciais" /></h2>
+        <div class="case__body" data-reveal style="--i:2">
+          <ul class="points" role="list">
+            {details.benefits.map((point) => <li>{point}</li>)}
+          </ul>
+        </div>
+      </section>
+    )}
+
+    {details.applications.length > 0 && (
+      <section class="container case__block" aria-labelledby="aplicacoes" data-reveal-group data-reveal-rule>
+        <h2 id="aplicacoes" class="case__heading"><RiseText text="Onde aplicar" /></h2>
+        <div class="case__body" data-reveal style="--i:2">
+          <ul class="points" role="list">
+            {details.applications.map((point) => <li>{point}</li>)}
+          </ul>
+        </div>
+      </section>
+    )}
+
     <section class="container case__block" aria-labelledby="limites" data-reveal-group data-reveal-rule>
       <h2 id="limites" class="case__heading"><RiseText text="O que este case não afirma" /></h2>
       <div class="case__body" data-reveal style="--i:2">

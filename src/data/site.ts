@@ -1,13 +1,13 @@
 export const site = {
   name: 'adryan1.dev',
   person: 'Adryan Chaves',
-  role: 'Designer e desenvolvedor full stack',
+  role: 'Desenvolvedor de soluções digitais',
   url: 'https://www.adryan1dev.com.br',
   lang: 'pt-BR',
   locale: 'pt_BR',
-  title: 'Adryan Chaves — Criação de Sites e Desenvolvimento Full Stack',
+  title: 'Adryan Chaves — Sites, Sistemas e Automações para Empresas',
   description:
-    'Criação de sites profissionais, landing pages e redesign para pequenas e médias empresas. Design e desenvolvimento full stack sob medida, de Almenara (MG) para todo o Brasil.',
+    'Desenvolvedor independente em Almenara (MG): criação de sites e landing pages, automações e sistemas sob medida para empresas e profissionais liberais.',
   location: { city: 'Almenara', region: 'MG', country: 'BR' },
   available: true,
   cv: '/cv/adryan-chaves-cv.pdf',
@@ -21,12 +21,13 @@ export const contact = {
 } as const;
 
 export const whatsappLink = (
-  message = 'Olá, Adryan! Vim pelo seu site e quero conversar sobre um projeto.',
+  message = 'Olá, Adryan! Vim pelo seu site e quero conversar sobre uma solução para minha empresa.',
 ) => `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(message)}`;
 
 export const nav = [
+  { label: 'Soluções', href: '/#servicos' },
   { label: 'Projetos', href: '/#projetos' },
-  { label: 'Serviços', href: '/#servicos' },
-  { label: 'Sobre', href: '/#sobre' },
+  { label: 'Processo', href: '/#processo' },
+  { label: 'Perfil', href: '/perfil' },
   { label: 'Contato', href: '/#contato' },
 ] as const;

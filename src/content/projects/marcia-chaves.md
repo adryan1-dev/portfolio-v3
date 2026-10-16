@@ -3,6 +3,7 @@ title: Márcia Chaves
 order: 1
 category: Landing page
 niche: Terapia
+solution: site
 year: 2026
 status: Protótipo publicado
 summary: Landing page de uma terapeuta certificada em TRG em Almenara (MG), feita para acolher quem busca ajuda e levar a primeira conversa ao WhatsApp.

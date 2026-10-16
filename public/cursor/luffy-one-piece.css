@@ -1,0 +1,26 @@
+@charset "UTF-8";
+/*
+ *   ██████╗██╗   ██╗██████╗ ███████╗ ██████╗ ██████╗ ███████╗
+ *  ██╔════╝██║   ██║██╔══██╗██╔════╝██╔═══██╗██╔══██╗██╔════╝
+ *  ██║     ██║   ██║██████╔╝███████╗██║   ██║██████╔╝███████╗
+ *  ██║     ██║   ██║██╔══██╗╚════██║██║   ██║██╔══██╗╚════██║
+ *  ╚██████╗╚██████╔╝██║  ██║███████║╚██████╔╝██║  ██║███████║
+ *   ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
+ *                         ██╗  ██╗██╗   ██╗
+ *                         ██║  ██║██║   ██║
+ *  ████████████████████   ███████║██║   ██║
+ *                         ╚════██║██║   ██║
+ *                              ██║╚██████╔╝
+ *                              ╚═╝ ╚═════╝
+ *
+ *  Brought to you by https://www.cursors-4u.com
+ *
+ *  Cursor: Luffy - One Piece
+ *  URL: https://www.cursors-4u.com/cursor/luffy-one-piece
+ */
+@keyframes cursor-anim {
+  0.00% { cursor: url("data:image/webp;base64,UklGRn4BAABXRUJQVlA4THEBAAAvH8AHEG+gKLYN6r21XwHt7GWVQgAF1DAVycYFeOikiZB6+FRADmoCAGngXyFIt7NawBIGkPkPAAD8XxFK8tladUh3qMjM0f0dF3GJgRzJtl07Obc0gbfldaTvXi5AJsKbG+LhTYXMRxoD/pSyfaOfXkV4by4fD2c03w4hov8TgCBTXlnCNE2DMFHVNM0SpmkahCkwMgzJlQYLJBOpGLFkTJkpJxJDlg8OEhONvB9EKjInAGpgWhYxksAAgDGrVGQCWt56AWzxdbBMxbOhrS3wRuiTR/Gi5f7xxQb2s/bJhYf/3f3E2+NgUsuKDRR34AT287pR0arnvVXPO8j1PhdKb772zfm6LFhWo5a6vnfT6/obclLLWnzv983fe78dfapRBz4WlobKBGSoyMECRpYWVcTUz8S4ey7G0mIQAcuZGHd2YiymIiLWasX48WNcbGkYqrYcLz9+PF9aQUbDAcCDjC/u7i2ZsCrurTCJVMCczBgA") 0 0, auto; }
+  50.00% { cursor: url("data:image/webp;base64,UklGRmwBAABXRUJQVlA4TGABAAAvH8AHEHdgFgCTAWwGOzNLLMUVQBqmIVk5gIfwPrOJIrakEogggNREksI8PRLogj3soA4PSQDzHwAA/r+7Y4v06CWcQLEKo2pGhbSUSQc5km27VnO+GcDbeLgH91IiihH8FO/eVLAZESkhIcgru/LSiU4V4b4y+WUCKs3iuSqNIKL/E4CB9DyaRZ+qwqBTUVXVLPpUFQY90DioyVGFGZKJVDTMOlNmyolEzfPzc2Kik/8GIgWZEwB1MM2JOEngEwBnVinIBAQLL4EJXw88U/FQm0zAs8Efchcvg9n7l0t4yvqHnPn7w8x23m6DST0rlhDNgB085WWnIpRTFsopA7n8hzNxfaq0jakyznhWp8ayvLm2svyAnNSzRrv9dv3t9pvhD9Wpn6wVnmqxAzkoyE8BjRaoIq62udUYAwciYLy7b4yuIiIewlZ9OuigVkwM9RgG0gxrHEg7olmAdC2Asfyn") 0 0, auto; }
+}
+html { animation: cursor-anim 1666ms step-end infinite; }
+a,button,input,textarea,label,[role=button],select,option{cursor:inherit!important}

@@ -1,11 +1,12 @@
 ---
 title: Lbook
-order: 7
+order: 4
 category: Aplicação full stack
 niche: Gestão de leituras
+solution: sistema
 year: 2026
 status: Projeto autoral
-summary: Aplicação para catalogar livros, acompanhar o progresso de leitura e guardar resenhas, com login e estante individual por conta.
+summary: Aplicação completa com login, estante individual por conta, regras por status e dados persistidos, do front-end ao banco de dados.
 seoDescription: Case do Lbook, aplicação full stack para organizar leituras, acompanhar o progresso e registrar resenhas. React, Supabase, Express e PostgreSQL.
 stack: [React, Vite, Tailwind CSS, Supabase, PostgreSQL]
 link:
@@ -26,7 +27,7 @@ gallery:
     alt: "Estante do Lbook no celular: navegação, busca, filtros de status e capas em duas colunas."
     caption: Estante no celular
 case:
-  lede: Uma aplicação para organizar leituras, acompanhar o progresso e registrar resenhas em um fluxo único.
+  lede: Uma aplicação completa, com autenticação, regras de negócio por status e dados persistidos em banco, do front-end à API.
   context: Projeto autoral, um caderno pessoal de leituras.
   objective: Organizar leituras, acompanhar o progresso e registrar resenhas em um só lugar.
   role: Produto, interface, API, banco de dados e automação de deploy.

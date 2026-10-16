@@ -1,8 +1,9 @@
 ---
 title: Info Projekt
-order: 4
+order: 5
 category: Site institucional
 niche: Provedor de internet
+solution: site
 year: 2026
 status: Protótipo publicado
 summary: Site de planos de fibra óptica que mostra as condições de cada cidade do Vale do Jequitinhonha e leva a contratação ao WhatsApp.

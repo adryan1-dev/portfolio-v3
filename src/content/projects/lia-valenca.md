@@ -1,8 +1,9 @@
 ---
 title: Lia Valença
-order: 6
+order: 9
 category: Landing page
 niche: Estética e bem-estar
+solution: site
 year: 2026
 status: Projeto conceitual
 summary: Estudo de site para uma marca fictícia de estética facial e corporal, feito para testar direção de arte, narrativa de marca e animação.
