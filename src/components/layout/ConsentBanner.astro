@@ -1,0 +1,196 @@
+---
+// Banner de consentimento (LGPD). O Microsoft Clarity só é carregado depois do aceite,
+// e só no build de produção. A escolha fica no localStorage e pode ser refeita pelo
+// botão [data-consent-open] do rodapé.
+const CLARITY_ID = 'ygvm21mqc7';
+---
+
+<div
+  class="consent"
+  data-consent
+  data-clarity-id={CLARITY_ID}
+  data-visible="false"
+  role="dialog"
+  aria-labelledby="consent-title"
+  aria-describedby="consent-text"
+  inert
+>
+  <div class="consent__inner">
+    <div class="consent__copy">
+      <p id="consent-title" class="consent__title">Cookies de análise</p>
+      <p id="consent-text" class="consent__text">
+        Uso o Microsoft Clarity para entender como o site é usado: cliques, rolagem e gravações anônimas das
+        sessões. Só começa se você aceitar, e dá para mudar de ideia pelo rodapé.
+      </p>
+    </div>
+    <div class="consent__actions">
+      <button type="button" class="consent__btn" data-consent-choice="denied">Recusar</button>
+      <button type="button" class="consent__btn consent__btn--primary" data-consent-choice="granted">Aceitar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const KEY = 'consent-analytics';
+  const banner = document.querySelector<HTMLElement>('[data-consent]');
+
+  const read = () => {
+    try {
+      return localStorage.getItem(KEY);
+    } catch {
+      return null;
+    }
+  };
+  const write = (value: string) => {
+    try {
+      localStorage.setItem(KEY, value);
+    } catch {
+      /* sem armazenamento: a escolha vale só nesta página */
+    }
+  };
+
+  type ClarityFn = ((...args: unknown[]) => void) & { q?: unknown[] };
+  const w = window as unknown as { clarity?: ClarityFn };
+
+  const loadClarity = (id: string) => {
+    if (!import.meta.env.PROD) return;
+    if (w.clarity) {
+      w.clarity('consent', true);
+      return;
+    }
+    const clarity: ClarityFn = function (...args: unknown[]) {
+      (clarity.q = clarity.q || []).push(args);
+    };
+    w.clarity = clarity;
+    const tag = document.createElement('script');
+    tag.async = true;
+    tag.src = `https://www.clarity.ms/tag/${id}`;
+    document.head.appendChild(tag);
+  };
+
+  const setVisible = (visible: boolean) => {
+    if (!banner) return;
+    banner.dataset.visible = String(visible);
+    banner.inert = !visible;
+  };
+
+  if (banner) {
+    const id = banner.dataset.clarityId ?? '';
+
+    const apply = (choice: string | null) => {
+      if (choice === 'granted') loadClarity(id);
+      else if (choice === 'denied') w.clarity?.('consent', false);
+    };
+
+    apply(read());
+    if (!read()) setVisible(true);
+
+    banner.querySelectorAll<HTMLButtonElement>('[data-consent-choice]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const choice = btn.dataset.consentChoice ?? 'denied';
+        write(choice);
+        apply(choice);
+        setVisible(false);
+      });
+    });
+
+    document.querySelectorAll('[data-consent-open]').forEach((el) => {
+      el.addEventListener('click', () => {
+        setVisible(true);
+        banner.querySelector<HTMLButtonElement>('[data-consent-choice="granted"]')?.focus();
+      });
+    });
+  }
+</script>
+
+<style>
+  .consent {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 40;
+    padding: 0 var(--margin) max(var(--margin), env(safe-area-inset-bottom));
+    pointer-events: none;
+    transform: translateY(calc(100% + 24px));
+    visibility: hidden;
+    transition:
+      transform var(--dur-base) var(--ease-out),
+      visibility 0s linear var(--dur-base);
+  }
+  .consent[data-visible='true'] {
+    transform: none;
+    visibility: visible;
+    transition:
+      transform var(--dur-base) var(--ease-out),
+      visibility 0s;
+  }
+
+  .consent__inner {
+    pointer-events: auto;
+    display: grid;
+    gap: 1rem;
+    max-width: 44rem;
+    margin-inline: auto;
+    padding: 1.25rem;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 12px;
+    background-color: rgb(17 19 24 / 0.92);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    backdrop-filter: blur(16px) saturate(140%);
+  }
+
+  .consent__title {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .consent__text {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  .consent__actions {
+    display: flex;
+    gap: 0.75rem;
+  }
+  .consent__btn {
+    flex: 1;
+    min-height: 44px;
+    padding-inline: 1.25rem;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 999px;
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+    background: transparent;
+    cursor: pointer;
+    transition:
+      background-color var(--dur-fast),
+      border-color var(--dur-fast);
+  }
+  .consent__btn:hover { background-color: rgb(255 255 255 / 0.06); }
+  .consent__btn--primary {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent);
+  }
+  .consent__btn--primary:hover { background-color: var(--color-accent-text); border-color: var(--color-accent-text); }
+  .consent__btn:focus-visible {
+    outline: 2px solid var(--color-accent-text);
+    outline-offset: 2px;
+  }
+
+  @media (min-width: 768px) {
+    .consent__inner {
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 2rem;
+    }
+    .consent__btn { flex: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .consent,
+    .consent[data-visible='true'] { transition: none; }
+  }
+</style>

@@ -3,6 +3,7 @@ import { Font } from 'astro:assets';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import StickyCta from '../components/layout/StickyCta.astro';
+import ConsentBanner from '../components/layout/ConsentBanner.astro';
 import { contact, site } from '../data/site';
 import { services } from '../data/content';
 import '../styles/global.css';
@@ -136,6 +137,7 @@ const jsonLd = {
     </main>
     <Footer />
     <StickyCta />
+    <ConsentBanner />
 
     <script>
       import { initReveal } from '../scripts/reveal';

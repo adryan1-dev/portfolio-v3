@@ -30,6 +30,9 @@ const year = new Date().getFullYear();
           </a>
         </li>
       ))}
+      <li>
+        <button type="button" class="site-footer__consent" data-consent-open>Cookies</button>
+      </li>
     </ul>
 
     <p class="site-footer__legal mono">© {year} {site.person}</p>
@@ -71,6 +74,18 @@ const year = new Date().getFullYear();
     transition: color var(--dur-fast);
   }
   .site-footer__links a:hover { color: var(--color-text); }
+  .site-footer__consent {
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    background: none;
+    cursor: pointer;
+    transition: color var(--dur-fast);
+  }
+  .site-footer__consent:hover { color: var(--color-text); }
 
   .site-footer__legal { color: var(--color-faint); }
 
